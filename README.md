@@ -1,7 +1,8 @@
 This project is for my own personal experimentation with programming languages. A lot of interesting new languages have appeared in recent years, with both remarkable similarities and also remarkable differences between them. Given that tastes also vary, I'm sure each language must be perfect for somebody...but which is perfect for *me*?
 
 It's hard to know what a language is actually like in everyday use, without actually using it. The exercise that I will focus on (the "kata", if you like) is called...
-
+  
+  
 > MARS ROVERS
 >
 > A squad of robotic rovers are to be landed by NASA on a plateau on Mars. This plateau, which is curiously rectangular, must be navigated by the rovers so that their on-board cameras can get a complete view of the surrounding terrain to send back to Earth.
@@ -12,29 +13,29 @@ It's hard to know what a language is actually like in everyday use, without actu
 >
 > Assume that the square directly North from (x, y) is (x, y+1).
 >
-> INPUT:
-> The first line of input is the upper-right coordinates of the plateau, the lower-left coordinates are assumed to be 0,0.\
+> INPUT  
+> The first line of input is the upper-right coordinates of the plateau, the lower-left coordinates are assumed to be 0,0.
 >
 > The rest of the input is information pertaining to the rovers that have been deployed. Each rover has two lines of input. The first line gives the rover's position, and the second line is a series of instructions telling the rover how to explore the plateau.
 >
 > The position is made up of two integers and a letter separated by spaces, corresponding to the x and y co-ordinates and the rover's orientation.
 >
 > Each rover will be finished sequentially, which means that the second rover won't start to move until the first one has finished moving.
->
->
-> OUTPUT
+>  
+>  
+> OUTPUT  
 > The output for each rover should be its final co-ordinates and heading.
->
->
+>  
+>  
 > SAMPLE DATA
 >
-> Test Input:
-> 5 5
-> 1 2 N
-> LMLMLMLMM
-> 3 3 E
-> MMRMMRMRRM
+> Test Input:  
+> 5 5  
+> 1 2 N  
+> LMLMLMLMM  
+> 3 3 E  
+> MMRMMRMRRM  
 >
-> Expected Output:
-> 1 3 N
-> 5 1 E
+> Expected Output:  
+> 1 3 N  
+> 5 1 E  
