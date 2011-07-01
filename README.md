@@ -1,8 +1,9 @@
 This project is for my own personal experimentation with programming languages. A lot of interesting new languages have appeared in recent years, with both remarkable similarities and also remarkable differences between them. Given that tastes also vary, I'm sure each language must be perfect for somebody...but which is perfect for *me*?
 
-It's hard to know what a language is actually like in everyday use, without actually using it. The exercise that I will focus on (the "kata", if you like) is called...
-  
-  
+
+Problem description
+-------------------
+
 > MARS ROVERS
 >
 > A squad of robotic rovers are to be landed by NASA on a plateau on Mars. This plateau, which is curiously rectangular, must be navigated by the rovers so that their on-board cameras can get a complete view of the surrounding terrain to send back to Earth.
@@ -39,3 +40,15 @@ It's hard to know what a language is actually like in everyday use, without actu
 > Expected Output:  
 > 1 3 N  
 > 5 1 E  
+
+
+General principles
+------------------
+
+I'm looking for a good general-purpose programming language, which scales to large projects. My aim is not to solve this problem in the least lines of code, nor the cleverest way. A concise yet clear and readable solution is the goal.
+
+There are a few "bells and whistles" that I would like to include in each solution, though:
+
+- It should be possible to express the test cases in code, in a way that resembles their original form in the SAMPLE DATA section of the problem. In other words, the top-level interface should be "DSL-like" (at the very least, "N" for north, "L" for left, and so on should be defined as symbols).
+
+- Following the principle of separation of concerns, I/O should not be mixed with the business logic.
