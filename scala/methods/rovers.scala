@@ -1,3 +1,5 @@
+package rovers
+
 object Directions {
 	class Direction(val dx: Int, val dy: Int) {
 		// Rotation is modelled as modulo arithmetic over the
@@ -28,10 +30,3 @@ case class Rover(x: Int, y: Int, d: Direction) {
 	def R = new Rover(x, y, d + 1)
 	def M = new Rover(x + d.dx, y + d.dy, d)
 }
-
-
-val testRover1 = Rover(1, 2, N)
-assert (Rover(1, 3, N) == testRover1.L.M.L.M.L.M.L.M.M)
-
-val testRover2 = Rover(3, 3, E)
-assert (Rover(5, 1, E) == testRover2.M.M.R.M.M.R.M.R.R.M)
