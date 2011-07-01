@@ -19,3 +19,16 @@ That is, a function that takes a Rover and returns a Rover. Scala allows functio
 
 Notice that the type of halfTurn is the same as a single rover command (it takes a Rover and returns a Rover). This is not the only way to solve the problem, but it's kinda *cool*, because it blurs the distinction between code and data. Structurally, a sequence of functions combined in this way resembles a linked list.
 
+
+Second solution: methods
+------------------------
+
+Despite its functional programming goodness, Scala is still an object-oriented language, in which objects and methods abound. I tried implementing all the operations as methods instead of functions, with the result being slightly shorter code because the pattern matching used in the first solution was no longer necessary, but also this slightly odd "train carriage" syntax in tests:
+
+    Rover(1, 2, N).L.M.L.M.L.M.L.M.M
+
+Of course, it would be easy to reproduce the syntax from the first solution, by simply creating functions that invoke methods, e.g.
+
+    def L = (_: Rover).L
+
+Perhaps it just shows I've spent too many years writing object oriented code, but I think there are some advantages to using methods. When programming in the small, functions and methods are more-or-less interchangeable, as the code above shows. But in large systems they make possible better data hiding (using private fields) and encapsulation of behaviour. These are organizational benefits rather than technical benefits, but important nevertheless.
