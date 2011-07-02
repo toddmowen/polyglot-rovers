@@ -28,6 +28,7 @@ case object L
 case object R
 case object M
 case object GetRover
+case object Exit
 
 class RoverActor(private var r: Rover) extends Actor {
 	def act = loop {
@@ -36,6 +37,7 @@ class RoverActor(private var r: Rover) extends Actor {
 			case R => r = Rover(r.x, r.y, r.d.right)
 			case M => r = Rover(r.x + r.d.dx, r.y + r.d.dy, r.d)
 			case GetRover => reply(r)
+			case Exit => exit
 		}
 	}
 
