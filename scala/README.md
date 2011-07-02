@@ -41,4 +41,4 @@ Just for fun, I wrote a solution using Scala's much-touted actors library. Obvio
 
 This solution assumes that messages are received by the actor in a deterministic order. Clearly, this means it makes no sense for multiple threads to communicate with the actor concurrently. But even with only one calling thread, this assumption may not hold true. Unlike Erlang, which guarantees that messages between two given processes are received in the order that they are sent, Scala apparently doesn't make the same guarantee, and I found a [code snippet][1] on stackoverflow.com which demonstrates this "feature" (though I haven't actually seen it manifested in my code yet).
 
-[1] http://stackoverflow.com/questions/5751993/why-are-messages-received-by-an-actor-unordered/6093131#6093131
+[1]: http://stackoverflow.com/questions/5751993/why-are-messages-received-by-an-actor-unordered/6093131#6093131
