@@ -1,3 +1,14 @@
+/*
+ * WARNING: This solution is NOT CORRECT as it relies on messages being
+ * received by the actor in the order that they are sent. Although such
+ * failure has not been observed in this particular case, the fact that
+ * Scala does not guarantee the order of messages even when sent from a
+ * single thread is demonstrated by the example code here:
+ *
+ * http://stackoverflow.com/questions/5751993/why-are-messages-received
+ * -by-an-actor-unordered/6093131#6093131
+ */
+
 package rovers
 
 import scala.actors.Actor
