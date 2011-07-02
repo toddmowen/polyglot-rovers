@@ -32,3 +32,13 @@ Of course, it would be easy to reproduce the syntax from the first solution, by 
     def L = (_: Rover).L
 
 Perhaps it just shows I've spent too many years writing object oriented code, but I think there are some advantages to using methods. When programming in the small, functions and methods are more-or-less interchangeable, as the code above shows. But in large systems they make possible better data hiding (using private fields) and encapsulation of behaviour. These are organizational benefits rather than technical benefits, but important nevertheless.
+
+
+Third solution: actors
+----------------------
+
+Just for fun, I wrote a solution using Scala's much-touted actors library. Obviously, this added considerable complexity to the design (and especially to the way the code is actually called, as the tests demonstrate), though in terms of syntax it's still reasonably compact.
+
+This solution assumes that messages are received by the actor in a deterministic order. Clearly, this means it makes no sense for multiple threads to communicate with the actor concurrently. But even with only one calling thread, this assumption may not hold true. Unlike Erlang, which guarantees that messages between two given processes are received in the order that they are sent, Scala apparently doesn't make the same guarantee, and I found a [code snippet][1] on stackoverflow.com which demonstrates this "feature" (though I haven't actually seen it manifested in my code yet).
+
+[1] http://stackoverflow.com/questions/5751993/why-are-messages-received-by-an-actor-unordered/6093131#6093131
