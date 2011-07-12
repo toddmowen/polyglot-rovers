@@ -35,19 +35,21 @@ namespace MarsRovers
 
         public UnitVector Right
         {
-            get { return ClockwiseOrder[MyPosition() + 1 % 4]; }
+            get { return ClockwiseOrder[(MyPosition() + 1) % 4]; }
         }
 
         public UnitVector Left
         {
-            get { return ClockwiseOrder[MyPosition() + 3 % 4]; }
+            get { return ClockwiseOrder[(MyPosition() + 3) % 4]; }
         }
     }
 
     public class Rover
     {
-        private Vector Position;
-        private UnitVector Heading;
+        // Field have internal write accessibility, because they are
+        // modified by extension methods defined in RoverCommands.
+        public Vector Position { get; internal set; }
+        public UnitVector Heading { get; internal set; }
 
         public Rover(int x, int y, UnitVector heading)
         {
@@ -55,8 +57,29 @@ namespace MarsRovers
             this.Heading = heading;
         }
 
-        public void L() { Heading = Heading.Left; }
-        public void R() { Heading = Heading.Right; }
-        public void M() { Position = Position + Heading; }
+        public delegate void RoverCommand(Rover r);
+        public void Execute(params RoverCommand[] commands)
+        {
+            foreach (RoverCommand cmd in commands)
+            {
+                cmd(this);
+            }
+        }
+    }
+
+    public static class RoverCommands
+    {
+        public static void L(this Rover r) { r.Heading = r.Heading.Left; }
+        public static void R(this Rover r) { r.Heading = r.Heading.Right; }
+        public static void M(this Rover r) { r.Position = r.Position + r.Heading; }
+    }
+
+    // Tests can inherit from this class in order to access commands as "L",
+    // rather than "RoverCommands.L". Yes, this is a hack / anti-pattern.
+    public abstract class UsingRoverCommands
+    {
+        protected static Rover.RoverCommand L = RoverCommands.L;
+        protected static Rover.RoverCommand R = RoverCommands.R;
+        protected static Rover.RoverCommand M = RoverCommands.M;
     }
 }
