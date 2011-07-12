@@ -5,33 +5,6 @@ using System.Text;
 
 namespace MarsRovers
 {
-    public enum Heading { N, E, S, W }
-
-    // extension methods for Headings
-    public static class HeadingMethods
-    {
-        public static Heading Right(this Heading h)
-        {
-            return (Heading) (((int) h + 1) % 4);
-        }
-
-        public static Heading Left(this Heading h)
-        {
-            return (Heading) (((int) h + 3) % 4);
-        }
-
-        public static Vector UnitVector(this Heading h)
-        {
-            switch (h)
-            {
-                case Heading.N: return new Vector(0, 1);
-                case Heading.E: return new Vector(1, 0);
-                case Heading.S: return new Vector(0, -1);
-                default: return new Vector(-1, 0);
-            }
-        }
-    }
-
     public class Vector
     {
         // instances are immutable
@@ -44,5 +17,46 @@ namespace MarsRovers
         {
             return new Vector(a.x + b.x, a.y + b.y);
         }
+    }
+
+    public class UnitVector: Vector
+    {
+        private UnitVector(int x, int y) : base(x, y) { }
+
+        // Since there is no public constructor, the following four
+        // instances are the only ones that should ever exist:
+        public static UnitVector N = new UnitVector(0, 1);
+        public static UnitVector E = new UnitVector(1, 0);
+        public static UnitVector S = new UnitVector(0, -1);
+        public static UnitVector W = new UnitVector(-1, 0);
+
+        private static UnitVector[] ClockwiseOrder = { N, E, S, W };
+        private int MyPosition() { return Array.IndexOf(ClockwiseOrder, this); }
+
+        public UnitVector Right
+        {
+            get { return ClockwiseOrder[MyPosition() + 1 % 4]; }
+        }
+
+        public UnitVector Left
+        {
+            get { return ClockwiseOrder[MyPosition() + 3 % 4]; }
+        }
+    }
+
+    public class Rover
+    {
+        private Vector Position;
+        private UnitVector Heading;
+
+        public Rover(int x, int y, UnitVector heading)
+        {
+            this.Position = new Vector(x, y);
+            this.Heading = heading;
+        }
+
+        public void L() { Heading = Heading.Left; }
+        public void R() { Heading = Heading.Right; }
+        public void M() { Position = Position + Heading; }
     }
 }
