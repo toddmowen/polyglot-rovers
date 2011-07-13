@@ -12,15 +12,26 @@ namespace Test
         {
             Rover r1 = new Rover(1, 2, UnitVector.N);
             r1.Execute(L,M,L,M,L,M,L,M,M);
-            Console.WriteLine(r1.Position.x);
-            Console.WriteLine(r1.Position.y);
+            Assert("Test 1", 1 == r1.Position.x && 3 == r1.Position.y
+                    && UnitVector.N == r1.Heading);
 
             Rover r2 = new Rover(3, 3, UnitVector.E);
             r2.Execute(M,M,R,M,M,R,M,R,R,M);
-            Console.WriteLine(r2.Position.x);
-            Console.WriteLine(r2.Position.y);
+            Assert("Test 2", 5 == r2.Position.x && 1 == r2.Position.y
+                    && UnitVector.E == r2.Heading);
 
+            Console.WriteLine("Tests passed!");
             Console.ReadLine();
+        }
+
+        private static void Assert(string msg, bool assertion)
+        {
+            if (!assertion)
+            {
+                Console.WriteLine("Assertion failed: " + msg);
+                Console.ReadLine();
+                System.Environment.Exit(1);
+            }
         }
     }
 }
