@@ -7,7 +7,7 @@ namespace MarsRovers
 {
     public class Vector
     {
-        // instances are immutable
+        // Vector instances are immutable
         public readonly int x;
         public readonly int y;
 
@@ -24,13 +24,13 @@ namespace MarsRovers
         private UnitVector(int x, int y) : base(x, y) { }
 
         // Since there is no public constructor, the following four
-        // instances are the only ones that should ever exist:
-        public static UnitVector N = new UnitVector(0, 1);
-        public static UnitVector E = new UnitVector(1, 0);
-        public static UnitVector S = new UnitVector(0, -1);
-        public static UnitVector W = new UnitVector(-1, 0);
+        // instances are the only ones that will ever exist:
+        public static readonly UnitVector N = new UnitVector(0, 1);
+        public static readonly UnitVector E = new UnitVector(1, 0);
+        public static readonly UnitVector S = new UnitVector(0, -1);
+        public static readonly UnitVector W = new UnitVector(-1, 0);
 
-        private static UnitVector[] ClockwiseOrder = { N, E, S, W };
+        private static readonly UnitVector[] ClockwiseOrder = { N, E, S, W };
         private int MyPosition() { return Array.IndexOf(ClockwiseOrder, this); }
 
         public UnitVector Right
@@ -46,10 +46,8 @@ namespace MarsRovers
 
     public class Rover
     {
-        // Field have internal write accessibility, because they are
-        // modified by extension methods defined in RoverCommands.
-        public Vector Position { get; internal set; }
-        public UnitVector Heading { get; internal set; }
+        public Vector Position { get; private set; }
+        public UnitVector Heading { get; private set; }
 
         public Rover(int x, int y, UnitVector heading)
         {
@@ -57,29 +55,34 @@ namespace MarsRovers
             this.Heading = heading;
         }
 
+        public void L() { Heading = Heading.Left; }
+        public void R() { Heading = Heading.Right; }
+        public void M() { Position = Position + Heading; }
+
         public delegate void RoverCommand(Rover r);
         public void Execute(params RoverCommand[] commands)
         {
-            foreach (RoverCommand cmd in commands)
-            {
-                cmd(this);
-            }
+            foreach (RoverCommand cmd in commands) cmd(this);
+        }
+
+        // Because the language doesn't have a straightforward way to create
+        // an "open instance delegate" (a delegate to an instance method, but
+        // not closed over a specific instance), this helper function is
+        // provided to make obtaining the RoverCommands simpler.
+        public static RoverCommand CommandByName(String name)
+        {
+            return (RoverCommand) Delegate.CreateDelegate(
+                    typeof(RoverCommand), null, typeof(Rover).GetMethod(name));
         }
     }
 
-    public static class RoverCommands
-    {
-        public static void L(this Rover r) { r.Heading = r.Heading.Left; }
-        public static void R(this Rover r) { r.Heading = r.Heading.Right; }
-        public static void M(this Rover r) { r.Position = r.Position + r.Heading; }
-    }
-
-    // Tests can inherit from this class in order to access commands as "L",
-    // rather than "RoverCommands.L". Yes, this is a hack / anti-pattern.
+    // As a further convenience, classes can inherit from UsingRoverCommands in
+    // order to access the L, R, and M commands without qualifiers. (Many people
+    // would call this an anti-pattern; I won't try to deny it).
     public abstract class UsingRoverCommands
     {
-        protected static Rover.RoverCommand L = RoverCommands.L;
-        protected static Rover.RoverCommand R = RoverCommands.R;
-        protected static Rover.RoverCommand M = RoverCommands.M;
+        protected static readonly Rover.RoverCommand L = Rover.CommandByName("L");
+        protected static readonly Rover.RoverCommand R = Rover.CommandByName("R");
+        protected static readonly Rover.RoverCommand M = Rover.CommandByName("M");
     }
 }
