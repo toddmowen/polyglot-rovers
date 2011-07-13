@@ -10,15 +10,13 @@ namespace Test
     {
         static void Main(string[] args)
         {
-            Rover r1 = new Rover(1, 2, UnitVector.N);
+            Rover r1 = new Rover(1, 2, Vector.N);
             r1.Execute(L,M,L,M,L,M,L,M,M);
-            Assert("Test 1", 1 == r1.Position.x && 3 == r1.Position.y
-                    && UnitVector.N == r1.Heading);
+            Assert("Test 1", new Rover(1, 3, Vector.N).Equals(r1));
 
-            Rover r2 = new Rover(3, 3, UnitVector.E);
+            Rover r2 = new Rover(3, 3, Vector.E);
             r2.Execute(M,M,R,M,M,R,M,R,R,M);
-            Assert("Test 2", 5 == r2.Position.x && 1 == r2.Position.y
-                    && UnitVector.E == r2.Heading);
+            Assert("Test 2", new Rover(5, 1, Vector.E).Equals(r2));
 
             Console.WriteLine("Tests passed!");
             Console.ReadLine();

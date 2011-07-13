@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MarsRovers
 {
-    public class Vector
+    // Immutable value type
+    public struct Vector
     {
-        // Vector instances are immutable
         public readonly int x;
         public readonly int y;
 
@@ -17,52 +17,54 @@ namespace MarsRovers
         {
             return new Vector(a.x + b.x, a.y + b.y);
         }
-    }
+ 
+        public static readonly Vector N = new Vector(0, 1);
+        public static readonly Vector E = new Vector(1, 0);
+        public static readonly Vector S = new Vector(0, -1);
+        public static readonly Vector W = new Vector(-1, 0);
+        public static readonly Vector[] UnitVectors = { N, E, S, W };
 
-    public class UnitVector: Vector
-    {
-        private UnitVector(int x, int y) : base(x, y) { }
-
-        // Since there is no public constructor, the following four
-        // instances are the only ones that will ever exist:
-        public static readonly UnitVector N = new UnitVector(0, 1);
-        public static readonly UnitVector E = new UnitVector(1, 0);
-        public static readonly UnitVector S = new UnitVector(0, -1);
-        public static readonly UnitVector W = new UnitVector(-1, 0);
-
-        private static readonly UnitVector[] ClockwiseOrder = { N, E, S, W };
-        private int MyPosition() { return Array.IndexOf(ClockwiseOrder, this); }
-
-        public UnitVector Right
+        private int MyPosition()
         {
-            get { return ClockwiseOrder[(MyPosition() + 1) % 4]; }
+            int pos = Array.IndexOf(UnitVectors, this);
+            if (pos == -1) throw new ArgumentException("Not a unit vector");
+            return pos;
         }
 
-        public UnitVector Left
+        public Vector Right
         {
-            get { return ClockwiseOrder[(MyPosition() + 3) % 4]; }
+            get { return UnitVectors[(MyPosition() + 1) % 4]; }
+        }
+
+        public Vector Left
+        {
+            get { return UnitVectors[(MyPosition() + 3) % 4]; }
         }
     }
 
-    public class Rover
+    // Mutable value type (typically not a good design choice; in this case
+    // we only do it out of laziness -- implementing this as a struct means
+    // we get structural equality for free, without needing to override the
+    // Equals method).
+    public struct Rover
     {
         public Vector Position { get; private set; }
-        public UnitVector Heading { get; private set; }
+        public Vector Heading { get; private set; }
 
-        public Rover(int x, int y, UnitVector heading)
+        public Rover(int x, int y, Vector heading) : this()
         {
-            this.Position = new Vector(x, y);
-            this.Heading = heading;
+            Position = new Vector(x, y);
+            Heading = heading;
         }
 
         public void L() { Heading = Heading.Left; }
         public void R() { Heading = Heading.Right; }
         public void M() { Position = Position + Heading; }
 
-        public delegate void RoverCommand(Rover r);
+        public delegate void RoverCommand(ref Rover r);
         public void Execute(params RoverCommand[] commands)
         {
-            foreach (RoverCommand cmd in commands) cmd(this);
+            foreach (RoverCommand cmd in commands) cmd(ref this);
         }
 
         // Because the language doesn't have a straightforward way to create
@@ -71,7 +73,7 @@ namespace MarsRovers
         // provided to make obtaining the RoverCommands simpler.
         public static RoverCommand CommandByName(String name)
         {
-            return (RoverCommand) Delegate.CreateDelegate(
+            return (RoverCommand)Delegate.CreateDelegate(
                     typeof(RoverCommand), null, typeof(Rover).GetMethod(name));
         }
     }
