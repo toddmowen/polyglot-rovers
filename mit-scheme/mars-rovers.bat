@@ -1,0 +1,1 @@
+"C:\Program Files\MIT-GNU Scheme\bin\mit-scheme.exe" --library "C:\Program Files\MIT-GNU Scheme\lib" --load mars-rovers.scm
