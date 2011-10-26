@@ -14,10 +14,10 @@
         (.write w name)
         (old-print-method o w)))))
 
-(defn-named N [vec] (update-in vec [1] inc))
-(defn-named E [vec] (update-in vec [0] inc))
-(defn-named S [vec] (update-in vec [1] dec))
-(defn-named W [vec] (update-in vec [0] dec))
+(defn-named N [vec] (update-in vec [:y] inc))
+(defn-named E [vec] (update-in vec [:x] inc))
+(defn-named S [vec] (update-in vec [:y] dec))
+(defn-named W [vec] (update-in vec [:x] dec))
 
 (defn turn [quarters bearing]
   (nth
@@ -34,12 +34,12 @@
 
 ;; sample data
 (assert (=
-  (Rover. [1 3] N)
+  (Rover. {:x 1 :y 3} N)
   (command
-    (Rover. [1 2] N)
+    (Rover. {:x 1 :y 2} N)
     L M L M L M L M M)))
 (assert (=
-  (Rover. [5 1] E)
+  (Rover. {:x 5 :y 1} E)
   (command
-    (Rover. [3 3] E)
+    (Rover. {:x 3 :y 3} E)
     M M R M M R M R R M)))
