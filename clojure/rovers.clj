@@ -25,6 +25,8 @@
     (mod quarters 4)))    
 
 (defrecord Rover [x y bearing])
+(defmethod print-method Rover [o, ^java.io.Writer w]
+  (print-method (cons 'Rover. (vals o)) w))
 
 (defn-named M [rover] ((:bearing rover) rover))
 (defn-named R [rover] (update-in rover [:bearing] (partial turn 1)))
