@@ -2,7 +2,7 @@
 
 ;; equivalent to defn, but add name as metadata to the fn
 (defmacro defn-named [name & decls]
-  (list `def name (list `with-meta (cons `fn decls) {:name (str name)})))
+  `(def ~name (with-meta (fn ~@decls) {:name (str '~name)})))
 
 ;; print-method that uses metadata from defn-named
 (let
@@ -14,14 +14,14 @@
         (.write w name)
         (old-print-method o w)))))
 
-(defn-named N [vec] (update-in vec [1] (partial + 1)))
-(defn-named E [vec] (update-in vec [0] (partial + 1)))
-(defn-named S [vec] (update-in vec [1] (partial + -1)))
-(defn-named W [vec] (update-in vec [0] (partial + -1)))
+(defn-named N [vec] (update-in vec [1] inc))
+(defn-named E [vec] (update-in vec [0] inc))
+(defn-named S [vec] (update-in vec [1] dec))
+(defn-named W [vec] (update-in vec [0] dec))
 
 (defn turn [quarters bearing]
   (nth
-    (drop-while (partial not= bearing) (cycle (list N E S W)))
+    (drop-while (partial not= bearing) (list N E S W N E S))
     (mod quarters 4)))    
 
 (defrecord Rover [position bearing])
@@ -33,9 +33,13 @@
 (defn command [rover & cmds] (reduce #(%2 %1) rover cmds))
 
 ;; sample data
-(command
-  (Rover. [1 2] N)
-  L M L M L M L M M)
-(command
-  (Rover. [3 3] E)
-  M M R M M R M R R M)
+(assert (=
+  (Rover. [1 3] N)
+  (command
+    (Rover. [1 2] N)
+    L M L M L M L M M)))
+(assert (=
+  (Rover. [5 1] E)
+  (command
+    (Rover. [3 3] E)
+    M M R M M R M R R M)))
