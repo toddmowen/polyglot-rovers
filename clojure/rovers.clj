@@ -52,6 +52,8 @@
   (let [parse (fn [line]
           (map read-string (clojure.string/split line #" +")))]
     (doseq [line (repeatedly read-line) :while line]
-      (let [rover (eval (cons 'Rover. (parse line)))
-            cmds  (eval (cons 'list (parse (read-line))))]
-        (do (println (apply command rover cmds)))))))
+      ;; strictly speaking this is a security hole ("eval is evil")
+      (binding [*ns* (find-ns 'rovers)]
+        (let [rover (eval (cons 'rovers.Rover. (parse line)))
+              cmds  (eval (cons 'list (parse (read-line))))]
+          (do (println (apply command rover cmds))))))))
