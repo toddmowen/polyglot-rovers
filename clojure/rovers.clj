@@ -1,6 +1,8 @@
 (ns rovers
   (:gen-class))
 
+(require 'clojure.string)
+
 ;; equivalent to defn, but add name as metadata to the fn
 (defmacro defn-named [sym & decls]
   `(def ~sym ^{:name (str '~sym)} (fn ~@decls)))
@@ -27,7 +29,7 @@
 
 (defrecord Rover [x y bearing])
 (defmethod print-method Rover [o, ^java.io.Writer w]
-  (print-method (cons 'Rover. (vals o)) w))
+  (.write w (clojure.string/join " " (map print-str (vals o)))))
 
 (defn-named M [rover] ((:bearing rover) rover))
 (defn-named R [rover] (update-in rover [:bearing] (partial turn 1)))
@@ -47,7 +49,6 @@
     (Rover. 3 3 E)
     M M R M M R M R R M)))
 
-(require 'clojure.string)
 (defn -main []
   (let [parse (fn [line]
           (map read-string (clojure.string/split line #" +")))]
