@@ -1,8 +1,8 @@
 (ns rovers)
 
 ;; equivalent to defn, but add name as metadata to the fn
-(defmacro defn-named [name & decls]
-  `(def ~name (with-meta (fn ~@decls) {:name (str '~name)})))
+(defmacro defn-named [sym & decls]
+  `(def ~sym ^{:name (str '~sym)} (fn ~@decls)))
 
 ;; print-method that uses metadata from defn-named
 (let
