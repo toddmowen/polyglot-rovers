@@ -1,4 +1,5 @@
-(ns rovers)
+(ns rovers
+  (:gen-class))
 
 ;; equivalent to defn, but add name as metadata to the fn
 (defmacro defn-named [sym & decls]
@@ -45,3 +46,12 @@
   (command
     (Rover. 3 3 E)
     M M R M M R M R R M)))
+
+(require 'clojure.string)
+(defn -main []
+  (let [parse (fn [line]
+          (map read-string (clojure.string/split line #" +")))]
+    (doseq [line (repeatedly read-line) :while line]
+      (let [rover (eval (cons 'Rover. (parse line)))
+            cmds  (eval (cons 'list (parse (read-line))))]
+        (do (println (apply command rover cmds)))))))
