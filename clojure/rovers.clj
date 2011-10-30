@@ -51,7 +51,7 @@
 
 (defn -main []
   (let [parse (fn [line]
-          (map read-string (clojure.string/split line #" +")))]
+          (map read-string (map first (re-seq #"([0-9]+|.) *" line))))]
     (doseq [line (repeatedly read-line) :while line]
       ;; strictly speaking this is a security hole ("eval is evil")
       (binding [*ns* (find-ns 'rovers)]
