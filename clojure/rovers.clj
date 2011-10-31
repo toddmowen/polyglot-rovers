@@ -3,6 +3,9 @@
 
 (require 'clojure.string)
 
+(def ^:dynamic xbound Long/MAX_VALUE)
+(def ^:dynamic ybound Long/MAX_VALUE)
+
 ;; equivalent to defn, but add name as metadata to the fn
 (defmacro defn-named [sym & decls]
   `(def ~sym ^{:name (str '~sym)} (fn ~@decls)))
@@ -35,7 +38,15 @@
 (defn-named R [rover] (update-in rover [:bearing] (partial turn 1)))
 (defn-named L [rover] (update-in rover [:bearing] (partial turn -1)))
 
-(defn command [rover & cmds] (reduce #(%2 %1) rover cmds))
+(defn command-1 [rover cmd]
+  (let [rover' (cmd rover)]
+    (if
+      (or (< (:x rover') 0) (> (:x rover') xbound)
+          (< (:y rover') 0) (> (:y rover') ybound))
+      (throw (new Exception "Rover fell off plateau"))
+      rover')))
+(defn command [rover & cmds]
+  (reduce command-1 rover cmds))
 
 ;; sample data
 (assert (=
@@ -51,10 +62,12 @@
 
 (defn -main []
   (let [parse (fn [line]
-          (map read-string (map first (re-seq #"([0-9]+|.) *" line))))]
-    (doseq [line (repeatedly read-line) :while line]
-      ;; strictly speaking this is a security hole ("eval is evil")
-      (binding [*ns* (find-ns 'rovers)]
-        (let [rover (eval (cons 'rovers.Rover. (parse line)))
-              cmds  (eval (cons 'list (parse (read-line))))]
-          (do (println (apply command rover cmds))))))))
+          (map read-string (map first (re-seq #"([0-9]+|.) *" line))))
+        bounds (parse (read-line))]
+    (binding [xbound (first bounds) ybound (second bounds)]
+      (doseq [line (repeatedly read-line) :while line]
+        ;; strictly speaking this is a security hole ("eval is evil")
+        (binding [*ns* (find-ns 'rovers)]
+          (let [rover (eval (cons 'rovers.Rover. (parse line)))
+                cmds  (eval (cons 'list (parse (read-line))))]
+            (do (println (apply command rover cmds)))))))))
