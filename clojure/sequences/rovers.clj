@@ -1,4 +1,6 @@
-(ns sequences.rovers)
+(ns sequences.rovers
+  (:gen-class))
+
 (require 'clojure.set)
 
 ;; rover state is represented by a vector, [pos dir]
@@ -62,3 +64,6 @@
   (let [[[x y] dir] rover
         dword ((clojure.set/map-invert directions) dir)]
     (println x y (name dword))))
+
+(defn -main []
+  (dorun (map prn-rover (rover-end-states (read-plateau-and-rovers)))))
