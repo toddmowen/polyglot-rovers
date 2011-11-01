@@ -1,24 +1,27 @@
 (ns sequences.rovers)
 
-(defn read-tokens []
-  (if-let [line (read-line)]
-    (map second (re-seq #"\s*([0-9]+|\w)" line))))
+(defn tokenize [line]
+  (map second (re-seq #"\s*([0-9]+|\w)" line)))
 
-(defn read-plateau []
-  (if-let [[xstr ystr] (read-tokens)]
+(defn parse-plateau [line]
+  (let [[xstr ystr] (tokenize line)]
     [(Integer/parseInt xstr) (Integer/parseInt ystr)]))
 
-(defn read-rover-state []
-  (if-let [[xstr ystr bstr] (read-tokens)]
+(defn parse-rover-state [line]
+  (let [[xstr ystr bstr] (tokenize line)]
      [(Integer/parseInt xstr) (Integer/parseInt ystr) bstr]))
 
-(defn read-rover-commands []
-  (read-tokens))
+(defn parse-rover-commands [line]
+  (tokenize line))
 
-(defn read-rover-state-and-commands []
-  (if-let [state (read-rover-state)]
-    [state (read-rover-commands)]))
+(defn parse-rovers [lines]
+  (for [[state commands] (partition 2 lines)]
+    [(parse-rover-state state) (parse-rover-commands commands)]))
+
+(defn parse-plateau-and-rovers [lines]
+  [(parse-plateau (first lines))
+   (parse-rovers (rest lines))])
 
 (defn read-plateau-and-rovers []
-  [(read-plateau)
-   (take-while (complement nil?) (repeatedly read-rover-state-and-commands))])
+  (let [lines (take-while (complement nil?) (repeatedly read-line))]
+    (parse-plateau-and-rovers lines)))
