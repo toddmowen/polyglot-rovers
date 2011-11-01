@@ -1,4 +1,5 @@
 (ns sequences.rovers)
+(require 'clojure.set)
 
 ;; rover state is represented by a vector, [pos dir]
 ;; where: pos is the current position, [x y]
@@ -19,15 +20,27 @@
   (map second (re-seq #"\s*([0-9]+|\w)" line)))
 
 (defn parse-plateau [line]
-  (let [[xstr ystr] (tokenize line)]
-    [(Integer/parseInt xstr) (Integer/parseInt ystr)]))
+  (let [[xstr ystr] (tokenize line)
+        x (Integer/parseInt xstr)
+        y (Integer/parseInt ystr)]
+    [x y]))
 
 (defn parse-rover-state [line]
-  (let [[xstr ystr bstr] (tokenize line)]
-     [(Integer/parseInt xstr) (Integer/parseInt ystr) bstr]))
+  (let [[xstr ystr dstr] (tokenize line)
+        x (Integer/parseInt xstr)
+        y (Integer/parseInt ystr)
+        dir (or
+              (directions (keyword dstr))
+              (throw (new Exception "No such direction")))]
+    [[x y] dir]))
 
 (defn parse-rover-commands [line]
-  (tokenize line))
+  (map
+    (fn [cstr]
+      (or
+        (commands (keyword cstr))
+        (throw (new Exception "No such command"))))
+    (tokenize line)))
 
 (defn parse-rovers [lines]
   (for [[state commands] (partition 2 lines)]
@@ -40,3 +53,12 @@
 (defn read-plateau-and-rovers []
   (let [lines (take-while (complement nil?) (repeatedly read-line))]
     (parse-plateau-and-rovers lines)))
+
+(defn rover-end-states [[plateau rovers-and-commands]]
+  (for [[rover commands] rovers-and-commands]
+    (reduce #(%2 %1) rover commands)))
+
+(defn prn-rover [rover]
+  (let [[[x y] dir] rover
+        dword ((clojure.set/map-invert directions) dir)]
+    (println x y (name dword))))
