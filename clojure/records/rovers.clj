@@ -1,4 +1,4 @@
-(ns rovers
+(ns records.rovers
   (:gen-class))
 
 (require 'clojure.string)
@@ -67,7 +67,7 @@
     (binding [xbound (first bounds) ybound (second bounds)]
       (doseq [line (repeatedly read-line) :while line]
         ;; strictly speaking this is a security hole ("eval is evil")
-        (binding [*ns* (find-ns 'rovers)]
-          (let [rover (eval (cons 'rovers.Rover. (parse line)))
+        (binding [*ns* (find-ns 'records.rovers)]
+          (let [rover (eval (cons 'records.rovers.Rover. (parse line)))
                 cmds  (eval (cons 'list (parse (read-line))))]
             (do (println (apply command rover cmds)))))))))
