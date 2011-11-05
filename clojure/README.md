@@ -25,4 +25,4 @@ The resulting mainline was much more satisfying than before, making the "read-pr
 
 Data enters the system from `read-plateau-and-rovers`, is transformed by `rover-end-states`, and finally output by `prn-rover`.
 
-It also occurred to me that I could very concisely define the compass directions in terms of the `quarter-turn` function. This is the first time that I've avoided the need to define N, S, E, and W individually, and it has a definite mathematical elegance.
+In this solution, I also returned to using unit vectors to represent bearing. Previously, I had abandoned this approach because its generality seemed to add nothing but extra complexity. Instead of defining rotation in geometric terms, it was usually easier to just cycle through the four compass directions. In this solution, however, I realized that given a `quarter-turn` function and a vector for North, I could concisely define the other compass directions in terms of these. The resulting code seems no worse than the non-geometric approach, and adds a certain degree of mathematical elegance.
