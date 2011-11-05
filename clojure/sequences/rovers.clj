@@ -48,9 +48,8 @@
   (for [[state commands] (partition 2 lines)]
     [(parse-rover-state state) (parse-rover-commands commands)]))
 
-(defn parse-plateau-and-rovers [lines]
-  [(parse-plateau (first lines))
-   (parse-rovers (rest lines))])
+(defn parse-plateau-and-rovers [[plateau-line & rover-lines]]
+  [(parse-plateau plateau-line) (parse-rovers rover-lines)])
 
 (defn read-plateau-and-rovers []
   (let [lines (take-while (complement nil?) (repeatedly read-line))]
@@ -62,8 +61,8 @@
 
 (defn prn-rover [rover]
   (let [[[x y] dir] rover
-        dword ((clojure.set/map-invert directions) dir)]
-    (println x y (name dword))))
+        dirword ((clojure.set/map-invert directions) dir)]
+    (println x y (name dirword))))
 
 (defn -main []
   (dorun (map prn-rover (rover-end-states (read-plateau-and-rovers)))))
