@@ -8,11 +8,8 @@ case class Vector(x: Int, y: Int) {
 case class Rover(pos: Vector, dir: Vector) {
 	override def toString = pos.x + " " + pos.y + " " + Rover.directionToName(dir)
 
-	// implicit conversion allows parameter to be an ordinary String too
-	def execute(cmds: Seq[Char]): Rover = cmds match {
-		case Nil => this
-		case Seq(cmd, rest @ _*) => Rover.commands(cmd)(this) execute rest
-	}
+	def execute(cmd: Char) = Rover.commands(cmd)(this)
+	def execute(cmds: String): Rover = cmds.foldLeft(this)(_ execute _)
 }
 
 object Rover {
