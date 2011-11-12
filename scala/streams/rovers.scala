@@ -31,10 +31,35 @@ object Rover {
 	}
 }
 
+object Main {
+	def main(args: Array[String]) = {
+		executeLines(io.Source.stdin.getLines.toStream) foreach println
+	}
+
+	def executeLines(lines: Stream[String]): Stream[Rover] = lines match {
+		// ignore plateau line
+		case plateauLine #:: roverLines => executeRoverLines(roverLines)
+	}
+
+	def executeRoverLines(lines: Stream[String]): Stream[Rover] = lines match {
+		case Stream.Empty => Stream.Empty
+		case rstr #:: cmds #:: rest =>
+			(Rover(rstr) execute cmds) #:: executeRoverLines(rest)
+	}
+}
+
 object Test {
 	def main(args: Array[String]) = {
 		assert("1 3 N" == (Rover("1 2 N") execute "LMLMLMLMM" toString))
 		assert("5 1 E" == (Rover("3 3 E") execute "MMRMMRMRRM" toString))
+		assert(Stream("1 3 N", "5 1 E") ==
+			Main.executeLines(Stream(
+				"5 5",
+				"1 2 N",
+				"LMLMLMLMM",
+				"3 3 E",
+				"MMRMMRMRRM"
+			)).map(_.toString))
 		println("Tests pass")
 	}
 }
