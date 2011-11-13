@@ -42,3 +42,15 @@ Just for fun, I wrote a solution using Scala's much-touted actors library. Obvio
 This solution assumes that messages are received by the actor in a deterministic order. Clearly, this means it makes no sense for multiple threads to communicate with the actor concurrently. But even with only one calling thread, this assumption may not hold true. Unlike Erlang, which guarantees that messages between two given processes are received in the order that they are sent, Scala apparently doesn't make the same guarantee, and I found a [code snippet][1] on stackoverflow.com which demonstrates this "feature" (though I haven't actually seen it manifested in my code yet).
 
 [1]: http://stackoverflow.com/questions/5751993/why-are-messages-received-by-an-actor-unordered/6093131#6093131
+
+
+Fourth solution: streams
+------------------------
+
+In all the previous solutions, I stopped after implementing an API, and never got around to writing the I/O routines for reading the rover "mission" from a file and printing out the results. I'm sure that if I had, I would have approached it in a stateful way: either in a loop that read, executed, and printed each rover, or by reading the whole file into an intermediate data structure (such as a List), applying the transformation, and then printing the results.
+
+While writing the "clojure/sequences" solution, I struck upon the stream processing pattern as a more "functional" way of dealing with I/O. It allows us to explicitly order certain operations (for example, that the line describing the rover's initial position is read before the list of commands), while remaining agnostic about the order of operations in general (for example, how transformation and output are interleaved with the read operations).
+
+Note on terminology: the kind of data structures we need for this design pattern are called "streams" in Scala (where they are implemented in `scala.collection.immutable.Stream`), and called "lazy sequences" in Clojure. Many of Clojure's core library functions return lazy sequences, and so stream processing tends to be the default in that language, rather than a special case.
+
+This solution is essentially a translation of the "clojure/sequences" solution into Scala, although it differs in some details. Most noticeably, Scala (like Java) encourages the organization of code into classes and methods, whereas Clojure encourages the use of static functions. Also, while the Clojure solution attempted to separate the concerns of parsing the input and performing the transformation, in the Scala solution I leant instead towards the principle of simple design by merging both concerns in the `executeRoverLines` method.
