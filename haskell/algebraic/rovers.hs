@@ -1,10 +1,7 @@
 data Bearing = N | E | S | W
     deriving (Show, Eq, Enum, Bounded)
 
-data Position = Position Int Int
-    deriving (Show, Eq)
-
-data Rover = Rover Position Bearing
+data Rover = Rover Int Int Bearing
     deriving (Show, Eq)
 
 data Command = L | R | M
@@ -15,16 +12,15 @@ left, right :: Bearing -> Bearing
 left b  = if (b == minBound) then maxBound else pred b
 right b = if (b == maxBound) then minBound else succ b
 
-move :: Int -> Int -> Position -> Position
-move dx dy (Position x y) = Position (x+dx) (y+dy)
-
-exec :: Rover -> Command -> Rover
-exec (Rover pos bearing) cmd =
+exec (Rover x y bearing) cmd =
     case cmd of
-        L -> Rover pos (left bearing)
-        R -> Rover pos (right bearing)
+        L -> Rover x y (left bearing)
+        R -> Rover x y (right bearing)
         M -> case bearing of
-            E -> Rover (move   1   0  pos) bearing
-            N -> Rover (move   0   1  pos) bearing
-            W -> Rover (move (-1)  0  pos) bearing
-            S -> Rover (move   0 (-1) pos) bearing
+            E -> Rover (x+1) y bearing
+            N -> Rover x (y+1) bearing
+            W -> Rover (x-1) y bearing
+            S -> Rover x (y-1) bearing
+
+output1 = (Rover 1 2 N) `exec` L `exec` M `exec` L `exec` M `exec` L `exec` M
+                        `exec` L `exec` M `exec` M
