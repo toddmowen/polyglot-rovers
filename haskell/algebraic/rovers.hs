@@ -2,13 +2,13 @@ import Data.List (foldl')
 
 
 data Bearing = N | E | S | W
-    deriving (Show, Eq, Enum, Bounded)
+    deriving (Show, Eq, Enum, Bounded, Read)
 
 data Rover = Rover Int Int Bearing
-    deriving (Show, Eq)
+    deriving (Show, Eq, Read)
 
 data Command = L | R | M
-    deriving (Show, Eq)
+    deriving (Show, Eq, Read)
 
 
 left, right :: Bearing -> Bearing
@@ -20,7 +20,7 @@ class Program a where
     exec :: Rover -> a -> Rover
 
 instance Program Command where
-    exec (Rover x y bearing) cmd =
+    (Rover x y bearing) `exec` cmd =
         case cmd of
             L -> Rover x y (left bearing)
             R -> Rover x y (right bearing)
@@ -33,8 +33,12 @@ instance Program Command where
 instance (Program a) => Program [a] where
     exec = foldl' exec
 
+-- Allow Chars (and by extension, Strings) to be executed too.
+instance Program Char where
+    rover `exec` char = rover `exec` (read [char] :: Command)
+
 
 -- sample inputs from problem spec
 output1 = (Rover 1 2 N) `exec` [L,M,L,M,L,M,L,M,M]
-output2 = (Rover 3 3 E) `exec` [[M,M,R,M],[M,R,M],[R,R,M]]
+output2 = (Rover 3 3 E) `exec` "MMRMMRMRRM"
 
