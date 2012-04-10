@@ -8,7 +8,6 @@ data Command = L | R | M
     deriving (Show, Eq)
 
 
-turn :: Int -> Bearing -> Bearing
-turn i b = toEnum $ wrapToBounds (fromEnum b + i)
-  where
-    wrapToBounds x = x `mod` (fromEnum (maxBound::Bearing) + 1)
+left, right :: Bearing -> Bearing
+left b  = if (b == minBound) then maxBound else pred b
+right b = if (b == maxBound) then minBound else succ b
