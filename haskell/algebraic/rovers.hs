@@ -1,4 +1,6 @@
 import Data.List (foldl')
+import Control.Monad
+import System.IO
 
 
 data Bearing = N | E | S | W
@@ -42,3 +44,17 @@ instance Program Char where
 output1 = (Rover 1 2 N) `exec` [L,M,L,M,L,M,L,M,M]
 output2 = (Rover 3 3 E) `exec` "MMRMMRMRRM"
 
+
+main = do
+    getLine  -- ignore plateau bounds
+    doRovers
+  where
+    doRovers = do
+        eof <- isEOF
+        if eof then return () else do
+            [x,y,bearing] <- liftM words getLine :: IO [String]
+            program <- getLine
+            let rover = Rover (read x) (read y) (read bearing)
+                Rover x' y' bearing' = rover `exec` program
+            putStrLn $ unwords [show x', show y', show bearing']
+            doRovers
