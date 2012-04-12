@@ -51,7 +51,7 @@ main = do
 
 doRovers = do
     eof <- isEOF
-    if eof then return () else do
+    unless eof $ do
         [x,y,bearing] <- liftM words getLine :: IO [String]
         program <- getLine
         let rover = Rover (read x) (read y) (read bearing)
