@@ -41,8 +41,8 @@ instance Program Char where
 
 
 -- sample inputs from problem spec
-output1 = (Rover 1 2 N) `exec` [L,M,L,M,L,M,L,M,M]
-output2 = (Rover 3 3 E) `exec` "MMRMMRMRRM"
+output1 = Rover 1 2 N `exec` [L,M,L,M,L,M,L,M,M]
+output2 = Rover 3 3 E `exec` "MMRMMRMRRM"
 
 
 main = do
