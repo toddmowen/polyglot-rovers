@@ -11,4 +11,4 @@ Here's the full code for just the _M_ function:
             (by (cdr (rover-bearing r))))
         (rover (+ bx (rover-x r)) (+ by (rover-y r)) (rover-bearing r))))
 
-What I really wanted was to extract these components from the _rover_ structure using pattern matching, as is common in more pure functional languages, but this dialect of Scheme doesn't come with support for that out of the box. Yes, there are third-party libraries that support it, but I wanted to limit myself to just the core features of the language.
+What I really wanted was to extract these components from the _rover_ structure using pattern matching, as is common in the "classical" functional languages, but this dialect of Scheme doesn't come with support for that out of the box. Yes, there are third-party libraries that support it, but I wanted to limit myself to just the core features of the language.
