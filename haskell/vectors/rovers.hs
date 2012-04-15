@@ -18,12 +18,12 @@ mult :: M -> V -> V
 
 -- rotation matrices
 
-rotateLeft =  ( ( 0, 1)
-              , (-1, 0)
+rotateLeft  = ( ( 0,-1)
+              , ( 1, 0)
               )
 
-rotateRight = ( ( 0,-1)
-              , ( 1, 0)
+rotateRight = ( ( 0, 1)
+              , (-1, 0)
               )
 
 
@@ -52,3 +52,12 @@ instance Show Rover where
 m (Rover p v) = Rover (p `plus` v) v
 l (Rover p v) = Rover p (rotateLeft `mult` v)
 r (Rover p v) = Rover p (rotateRight `mult` v)
+
+
+-- left-to-right function composition operator
+(&) = flip (.)
+
+
+-- sample inputs from problem spec
+output1 = m.m.l.m.l.m.l.m.l $ rover 1 2 n    -- right-to-left syntax
+output2 = m&m&r&m&m&r&m&r&r&m $ rover 3 3 e  -- left-to-right syntax
