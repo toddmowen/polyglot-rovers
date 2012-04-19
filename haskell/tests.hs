@@ -1,7 +1,7 @@
 import Test.QuickCheck
 import Data.Char (toUpper, toLower)
 
-import AlgebraicRovers hiding (main)
+import AlgebraicRovers
 import VectorRovers
 
 
