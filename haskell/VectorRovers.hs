@@ -2,6 +2,7 @@ module VectorRovers where
 
 import Data.List
 import Data.Maybe
+import Data.Char
 
 
 -- Very simple types and operations for 2D integer vectors and matrices
@@ -33,8 +34,9 @@ rotateRight = ( ( 0, 1)
 
 bearings@[n,e,s,w] = take 4 $ iterate (mult rotateRight) (0,1)
 
-bearingToChar b = fromJust $ lookup b (zip bearings "nesw")
-charToBearing c = fromJust $ lookup c (zip "nesw" bearings)
+bearingToUpchar = toUpper . bearingToLowchar
+bearingToLowchar b = fromJust $ lookup b (zip bearings "nesw")
+charToBearing c = fromJust $ lookup (toLower c) (zip "nesw" bearings)
 
 
 -- rovers are represented internally by a position vector and a velocity vector,
@@ -46,7 +48,7 @@ rover x y bearing = Rover (x,y) bearing
 
 instance Show Rover where
     show (Rover (x,y) bearing) =
-        "rover " ++ (show x) ++ " " ++ (show y) ++ " " ++ [bearingToChar bearing]
+        "rover " ++ (show x) ++ " " ++ (show y) ++ " " ++ [bearingToLowchar bearing]
 
 
 -- rover commands, in the form of functions
@@ -55,7 +57,7 @@ m (Rover p v) = Rover (p `plus` v) v
 l (Rover p v) = Rover p (rotateLeft `mult` v)
 r (Rover p v) = Rover p (rotateRight `mult` v)
 
-charToCommand c = fromJust $ lookup c [('m',m), ('l',l), ('r',r)]
+charToCommand c = fromJust $ lookup (toLower c) [('m',m), ('l',l), ('r',r)]
 
 
 -- left-to-right function composition operator

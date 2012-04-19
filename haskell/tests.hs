@@ -1,5 +1,4 @@
 import Test.QuickCheck
-import Data.Char (toUpper, toLower)
 
 import AlgebraicRovers
 import VectorRovers
@@ -19,12 +18,12 @@ algebraicResult x y bearing cmds = (x', y', show bearing')
     (AlgebraicRovers.Rover x' y' bearing') =
         (AlgebraicRovers.Rover x y (read [bearing])) `exec` cmds
 
-vectorResult x y upcaseBearing upcaseCmds = (x', y', upcaseBearing')
+vectorResult x y bearing cmds = (x', y', bearing')
   where
     (VectorRovers.Rover (x',y') b') = f (rover x y b)
-    b = charToBearing (toLower upcaseBearing)
-    f = foldl (flip (.)) id $ map (charToCommand . toLower) upcaseCmds
-    upcaseBearing' = toUpper (bearingToChar b') : ""
+    b = charToBearing bearing
+    f = foldl (flip (.)) id $ map charToCommand cmds
+    bearing' = bearingToUpchar b' : ""
 
 
 main = quickCheck prop_implementationsEquivalent
