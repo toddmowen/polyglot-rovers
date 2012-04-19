@@ -55,6 +55,8 @@ m (Rover p v) = Rover (p `plus` v) v
 l (Rover p v) = Rover p (rotateLeft `mult` v)
 r (Rover p v) = Rover p (rotateRight `mult` v)
 
+charToCommand c = fromJust $ lookup c [('m',m), ('l',l), ('r',r)]
+
 
 -- left-to-right function composition operator
 (&) = flip (.)
