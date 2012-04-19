@@ -23,7 +23,7 @@ vectorResult x y upcaseBearing upcaseCmds = (x', y', upcaseBearing')
   where
     (VectorRovers.Rover (x',y') b') = f (rover x y b)
     b = charToBearing (toLower upcaseBearing)
-    f = foldr (.) id $ map (charToCommand . toLower) upcaseCmds
+    f = foldl (flip (.)) id $ map (charToCommand . toLower) upcaseCmds
     upcaseBearing' = toUpper (bearingToChar b') : ""
 
 
