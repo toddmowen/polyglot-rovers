@@ -1,3 +1,5 @@
+module AlgebraicRovers where
+
 import Data.List (foldl')
 import Control.Monad
 import System.IO
