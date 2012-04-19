@@ -1,3 +1,5 @@
+module VectorRovers where
+
 import Data.List
 import Data.Maybe
 
