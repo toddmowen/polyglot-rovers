@@ -26,3 +26,4 @@ x `successorIn` xs = let (_,it:successor:_) = break (==x) xs in successor
 -- sample inputs from problem spec
 
 output1 = execState (l >> m >> l >> m >> l >> m >> l >> m >> m) (Rover 1 2 'N')
+output2 = execState (sequence_ [m,m,r,m,m,r,m,r,r,m]) (Rover 3 3 'E')
