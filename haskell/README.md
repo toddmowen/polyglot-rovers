@@ -21,3 +21,20 @@ And write a sequence of commands like this:
 I wrote a function that applies commands to a Rover, called `exec`. Using infix notation, I could simply write:
 
     Rover 1 2 N `exec` [L,M,L,M,L,M,L,M,M]
+
+
+
+Second solution: vector arithmetic
+----------------------------------
+
+Being such a mathematical language, I almost expected that Haskell might have matrix types in its core library, but this is not the case. In fact, I couldn't even find a third party library that suited my needs. However, it was easy to define my own vector and matrix types and write the operations I needed (just addition and multiplication).
+
+Implementing this bit of "plumbing" turned out to be well worth it, because the rover commands then became concise, mathematical statements. Given that `Rover p v` represents a rover with position vector `p` and velocity vector `v`, the right-turn command `r` is defined as follows:
+
+    rotateRight = ( ( 0, 1)
+                  , (-1, 0)
+                  )
+
+    r (Rover p v) = Rover p (rotateRight `mult` v)
+
+Due to rules about how functions are named, I had to deviate from the "language" of the problem spec slightly by using lowercase instead of uppercase letters for the bearings and commands. This itself is of no great significance, but did get me thinking about whether it would be easy to embed a more extensive DSL in Haskell. My conclusion: probably not easy! (There are extensions such as quasiquotation, which I haven't looked into, that apparently address this kind of need, but at my current point in the Haskell learning curve I am hardly about to label these as "easy"). On the other hand, the language does give you a lot of power and flexibility in designing abstractions.
