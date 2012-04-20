@@ -1,4 +1,6 @@
-import VectorRovers
+#!/usr/bin/env runghc -i..
+
+import Vector.Rovers
 
 
 main = interact (unlines . processInput . lines)

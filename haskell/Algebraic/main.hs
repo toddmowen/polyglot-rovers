@@ -1,7 +1,9 @@
+#!/usr/bin/env runghc -i..
+
 import Control.Monad
 import System.IO
 
-import AlgebraicRovers
+import Algebraic.Rovers
 
 
 main = do

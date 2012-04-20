@@ -1,7 +1,9 @@
+#!/usr/bin/env runghc
+
 import Test.QuickCheck
 
-import AlgebraicRovers
-import VectorRovers
+import Algebraic.Rovers
+import Vector.Rovers
 
 
 prop_implementationsEquivalent x y =
@@ -15,12 +17,12 @@ prop_implementationsEquivalent x y =
 
 algebraicResult x y bearing cmds = (x', y', show bearing')
   where
-    (AlgebraicRovers.Rover x' y' bearing') =
-        (AlgebraicRovers.Rover x y (read [bearing])) `exec` cmds
+    (Algebraic.Rovers.Rover x' y' bearing') =
+        (Algebraic.Rovers.Rover x y (read [bearing])) `exec` cmds
 
 vectorResult x y bearing cmds = (x', y', bearing')
   where
-    (VectorRovers.Rover (x',y') b') = f (rover x y b)
+    (Vector.Rovers.Rover (x',y') b') = f (rover x y b)
     b = charToBearing bearing
     f = foldl (flip (.)) id $ map charToCommand cmds
     bearing' = bearingToUpchar b' : ""

@@ -1,4 +1,4 @@
-module AlgebraicRovers where
+module Algebraic.Rovers where
 
 import Data.List (foldl')
 

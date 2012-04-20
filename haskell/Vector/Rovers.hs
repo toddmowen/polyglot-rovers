@@ -1,4 +1,4 @@
-module VectorRovers where
+module Vector.Rovers where
 
 import Data.List
 import Data.Maybe
