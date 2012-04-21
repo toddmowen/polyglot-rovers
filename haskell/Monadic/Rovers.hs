@@ -22,8 +22,12 @@ m = modify $ \rover ->
 
 x `successorIn` xs = let (_,it:successor:_) = break (==x) xs in successor 
 
+commandsFromString :: String -> RoverState()
+commandsFromString = sequence_ . map commandFromChar
+commandFromChar c = case c of { 'L' -> l; 'R' -> r; 'M' -> m }
+
 
 -- sample inputs from problem spec
 
 output1 = execState (l >> m >> l >> m >> l >> m >> l >> m >> m) (Rover 1 2 'N')
-output2 = execState (sequence_ [m,m,r,m,m,r,m,r,r,m]) (Rover 3 3 'E')
+output2 = execState (commandsFromString "MMRMMRMRRM") (Rover 3 3 'E')
