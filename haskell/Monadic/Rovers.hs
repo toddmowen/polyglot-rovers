@@ -11,14 +11,15 @@ instance Show Rover where
 
 
 type RoverState = State Rover
+type RoverAction = RoverState ()
 
-runRover :: Rover -> RoverState a -> Rover
+runRover :: Rover -> RoverAction -> Rover
 runRover rover actions = execState actions rover
 
 
 -- rover commands
 
-r,l,m :: RoverState ()
+r,l,m :: RoverAction
 r = modify $ \rover -> rover { bearing = bearing rover `successorIn` "NESWN" }
 l = modify $ \rover -> rover { bearing = bearing rover `successorIn` "NWSEN" }
 m = modify $ \rover ->
@@ -30,7 +31,7 @@ m = modify $ \rover ->
 
 x `successorIn` xs = let (_,it:successor:_) = break (==x) xs in successor 
 
-commandsFromString :: String -> RoverState()
+commandsFromString :: String -> RoverAction
 commandsFromString = sequence_ . map commandFromChar
 commandFromChar c = case c of { 'L' -> l; 'R' -> r; 'M' -> m }
 
