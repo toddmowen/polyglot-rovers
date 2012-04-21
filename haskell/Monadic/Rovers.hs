@@ -7,6 +7,9 @@ data Rover = Rover { x::Int, y::Int, bearing::Char }
 
 type RoverState = State Rover
 
+runRover :: Rover -> RoverState a -> Rover
+runRover rover actions = execState actions rover
+
 
 -- rover commands
 
@@ -29,5 +32,5 @@ commandFromChar c = case c of { 'L' -> l; 'R' -> r; 'M' -> m }
 
 -- sample inputs from problem spec
 
-output1 = execState (l >> m >> l >> m >> l >> m >> l >> m >> m) (Rover 1 2 'N')
-output2 = execState (commandsFromString "MMRMMRMRRM") (Rover 3 3 'E')
+output1 = runRover (Rover 1 2 'N') $ do l; m; l; m; l; m; l; m; m
+output2 = runRover (Rover 3 3 'E') (commandsFromString "MMRMMRMRRM")
