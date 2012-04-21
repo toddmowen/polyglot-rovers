@@ -1,4 +1,4 @@
-module Monadic.Parser (Scenario, parseScenario) where
+module Monadic.Parser (Scenario(..), parseScenario) where
 
 import Text.Parsec
 import Text.Parsec.Char
@@ -10,8 +10,11 @@ import Monadic.Rovers
 data Scenario = Scenario { getBounds::(Int,Int), getRovers::[Rover] }
     deriving (Show, Eq)
 
-parseScenario :: SourceName -> [Char] -> Either ParseError Scenario
-parseScenario = parse scenario
+parseScenario :: SourceName -> [Char] -> Scenario
+parseScenario filePath input =
+    case parse scenario filePath input of
+        Left parseError -> error (show parseError)
+        Right result -> result
 
 scenario = do
     bounds <- boundsLine

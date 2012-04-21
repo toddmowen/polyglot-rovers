@@ -2,8 +2,13 @@ module Monadic.Rovers where
 
 import Control.Monad.State
 
+
 data Rover = Rover { x::Int, y::Int, bearing::Char }
-    deriving (Show, Eq)
+    deriving (Eq)
+
+instance Show Rover where
+    show (Rover x y b) = (show x) ++ " " ++ (show y) ++ " " ++ (b:"")
+
 
 type RoverState = State Rover
 
