@@ -20,7 +20,8 @@ parseScenario filePath input =
 
 scenario = do
     bounds <- boundsLine
-    rovers <- roverSpec `endBy` eof
+    rovers <- many roverSpec
+    eof
     return (Scenario bounds rovers)
 
 boundsLine = do
