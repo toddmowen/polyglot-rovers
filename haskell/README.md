@@ -38,3 +38,27 @@ Implementing this bit of "plumbing" turned out to be well worth it, because the 
     r (Rover p v) = Rover p (rotateRight `mult` v)
 
 Due to rules about how functions are named, I had to deviate from the "language" of the problem spec slightly by using lowercase instead of uppercase letters for the bearings and commands. This itself is of no great significance, but did get me thinking about whether it would be easy to embed a more extensive DSL in Haskell. My conclusion: probably not easy! (There are extensions such as quasiquotation, which I haven't looked into, that apparently address this kind of need, but at my current point in the Haskell learning curve I am hardly about to label these as "easy"). On the other hand, the language does give you a lot of power and flexibility in designing abstractions.
+
+
+
+Third solution: state monad
+---------------------------
+
+Just for fun, I set out to write a solution involving "gratuitous" use of a monad. I was mildly surprised to find this actually resulted in quite a clear and concise implementation. But of course, that's exactly what a good abstraction should provide, and monads are a very powerful abstraction.
+
+Specifically, I wrapped the rover's current position and direction in a `State` monad, and implemented the rover commands as operations that modify the state. At first glance, this may seem like a retreat into imperative programming (and proof of the saying that "one can write C in any language"). In defense, I will point out that sequential execution of rover commands is explicit in the problem description, so modeling the problem in this way is actually a very natural mapping of the domain.
+
+To find a rover's final position, we call this `runRover` function with a initial state and an operation. For example, to execute the "M" command:
+
+    runRover (Rover 1 2 'N') m
+
+Multiple actions can be composed into a sequence in a few different ways, for example using a `do` block:
+
+    runRover (Rover 1 2 'N') $
+        do m
+           r
+           m
+
+I rounded off this solution by writing the input parser using the Parsec library -- which is also based on monads.
+
+It's worth noting that, after spending a few months playing with Haskell, I have only recently become familiar enough with monads to even imagine this solution. Most of the difficulty of learning Haskell (but also most of the fun) lies not in the basic syntax, but in grasping the ramifications of the computational model (lazy evaluation) and coming to terms with the standard libraries and the idioms and types which they use. Monads deserve a special mention here. At first they seemed very esoteric to me, something clever but without an obvious use. Yet now I would go so far as to say that you can write Haskell programs without monads, only in the same sense that you can write C++ programs without classes.
