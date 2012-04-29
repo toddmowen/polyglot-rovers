@@ -18,31 +18,6 @@ void R(Rover&);
 void L(Rover&);
 
 
-/*
- * Type-safe enum pattern.
- * Apart from the four predefined directions, other Bearing instances cannot be
- * created. To test for equality, please compare by reference.
- */
-class Bearing
-{
-public:
-	Bearing(char symbol, int dx, int dy);
-	bearing_t turned(int quartersRight) const;
-
-	const char symbol;
-	const int dx, dy;
-
-	static const Bearing _N;
-	static const Bearing _E;
-	static const Bearing _S;
-	static const Bearing _W;
-
-private:
-	Bearing(const Bearing&);
-	Bearing& operator=(const Bearing&);
-};
-
-
 class Rover
 {
 public:
@@ -51,6 +26,33 @@ public:
 
 	Rover(int x, int y, bearing_t bearing);
 	bool operator==(Rover const& rover) const;
+};
+
+
+/*
+ * Variation of the type-safe enum pattern: the four cardinal compass directions
+ * are the only four instances of this class. The bearing_t constants declared
+ * above are simply pointers to these unique instances.
+ */
+class Bearing
+{
+public:
+	Bearing(char symbol, int dx, int dy);
+	bearing_t turned(int quartersRight) const;
+
+	const char symbol;
+	const int dx;
+	const int dy;
+
+	static const Bearing _N;
+	static const Bearing _E;
+	static const Bearing _S;
+	static const Bearing _W;
+
+private:
+	// hide default copy constructor and assignment operator
+	Bearing(const Bearing&);
+	Bearing& operator=(const Bearing&);
 };
 
 

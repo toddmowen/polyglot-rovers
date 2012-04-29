@@ -24,7 +24,7 @@ Bearing::Bearing(char symbol, int dx, int dy) : symbol(symbol), dx(dx), dy(dy)
 }
 
 
-Bearing const* Bearing::turned(int quartersRight) const
+bearing_t Bearing::turned(int quartersRight) const
 {
 	static bearing_t order[] = {N, E, S, W};
 	static auto begin = &order[0];
