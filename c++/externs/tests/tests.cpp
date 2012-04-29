@@ -4,10 +4,29 @@
  */
 
 #include <iostream>
+#include <assert.h>
+
+#include "../rovers.h"
+
 
 using namespace std;
+using namespace rovers;
+
+
+void test_construct()
+{
+	Rover rover(1, 2, N);
+
+	assert(1 == rover.x);
+	assert(2 == rover.y);
+	assert(N == rover.bearing);
+}	
+
 
 int main()
 {
-	cout << "hello world" << endl;
+	test_construct();
+
+	cout << "All tests passed!" << endl;
+	return 0;
 }
