@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "main", "externs.vcxproj", "{E80838EF-8B66-4DB4-A345-58A1A56A8943}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{CA7D1F6E-4BD8-4088-B2E4-A84C601E25C0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E80838EF-8B66-4DB4-A345-58A1A56A8943} = {E80838EF-8B66-4DB4-A345-58A1A56A8943}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
