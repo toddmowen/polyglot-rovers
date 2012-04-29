@@ -42,7 +42,7 @@ class Rover
 {
 public:
 	int x, y;
-	Bearing const& bearing;
+	Bearing const* bearing;
 
 	Rover(int x, int y, Bearing const& bearing);
 	bool operator==(Rover const& rover) const;
