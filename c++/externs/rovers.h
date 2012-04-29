@@ -14,15 +14,15 @@ class Bearing
 {
 public:
 	Bearing(char symbol, int dx, int dy);
-	Bearing const& turned(int quartersRight) const;
+	Bearing const* turned(int quartersRight) const;
 
 	const char symbol;
 	const int dx, dy;
 
-	static const Bearing N;
-	static const Bearing E;
-	static const Bearing S;
-	static const Bearing W;
+	static const Bearing _N;
+	static const Bearing _E;
+	static const Bearing _S;
+	static const Bearing _W;
 
 private:
 	Bearing(const Bearing&);
@@ -30,21 +30,17 @@ private:
 };
 
 
-// For convenience, the bearing constants are copied to the "rovers" namespace,
-// so there is no need to write Bearing::N, etc.
-extern Bearing const& N;
-extern Bearing const& E;
-extern Bearing const& S;
-extern Bearing const& W;
+typedef Bearing const* bearing_t;
+extern bearing_t N, E, S, W;
 
 
 class Rover
 {
 public:
 	int x, y;
-	Bearing const* bearing;
+	bearing_t bearing;
 
-	Rover(int x, int y, Bearing const& bearing);
+	Rover(int x, int y, bearing_t bearing);
 	bool operator==(Rover const& rover) const;
 };
 

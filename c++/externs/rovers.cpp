@@ -7,16 +7,16 @@ namespace rovers
 {
 
 // bearings
-const Bearing Bearing::N('N',  0,  1);  Bearing const& N = Bearing::N;
-const Bearing Bearing::E('E',  1,  0);  Bearing const& E = Bearing::E;
-const Bearing Bearing::S('S',  0, -1);  Bearing const& S = Bearing::S;
-const Bearing Bearing::W('W', -1,  0);  Bearing const& W = Bearing::W;
+const Bearing Bearing::_N('N',  0,  1);  bearing_t N = &Bearing::_N;
+const Bearing Bearing::_E('E',  1,  0);  bearing_t E = &Bearing::_E;
+const Bearing Bearing::_S('S',  0, -1);  bearing_t S = &Bearing::_S;
+const Bearing Bearing::_W('W', -1,  0);  bearing_t W = &Bearing::_W;
 
 
 // commands
 void M(Rover& rover) { rover.x += rover.bearing->dx; rover.y += rover.bearing->dy; }
-void R(Rover& rover) { rover.bearing = &rover.bearing->turned(1); }
-void L(Rover& rover) { rover.bearing = &rover.bearing->turned(-1); }
+void R(Rover& rover) { rover.bearing = rover.bearing->turned(1); }
+void L(Rover& rover) { rover.bearing = rover.bearing->turned(-1); }
 
 
 Bearing::Bearing(char symbol, int dx, int dy) : symbol(symbol), dx(dx), dy(dy)
@@ -24,9 +24,9 @@ Bearing::Bearing(char symbol, int dx, int dy) : symbol(symbol), dx(dx), dy(dy)
 }
 
 
-Bearing const& Bearing::turned(int quartersRight) const
+Bearing const* Bearing::turned(int quartersRight) const
 {
-	static Bearing const* order[] = {&N, &E, &S, &W};
+	static bearing_t order[] = {N, E, S, W};
 	static auto begin = &order[0];
 	static auto end = &order[4];
 
@@ -34,11 +34,11 @@ Bearing const& Bearing::turned(int quartersRight) const
 	int turn_idx = (this_idx + quartersRight) % 4;
 	if (turn_idx < 0) turn_idx += 4;  // deal with possible negative result of '%'
 
-	return *order[turn_idx];
+	return order[turn_idx];
 }
 
 
-Rover::Rover(int x, int y, Bearing const& bearing) : x(x), y(y), bearing(&bearing)
+Rover::Rover(int x, int y, bearing_t bearing) : x(x), y(y), bearing(bearing)
 {
 }
 
