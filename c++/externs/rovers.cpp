@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iterator>
 #include "rovers.h"
 
 using namespace std;
@@ -27,14 +28,12 @@ Bearing::Bearing(char symbol, int dx, int dy) : symbol(symbol), dx(dx), dy(dy)
 bearing_t Bearing::turned(int quartersRight) const
 {
 	static bearing_t order[] = {N, E, S, W};
-	static auto begin = &order[0];
-	static auto end = &order[4];
 
-	int this_idx = find(begin, end, this) - begin;
-	int turn_idx = (this_idx + quartersRight) % 4;
-	if (turn_idx < 0) turn_idx += 4;  // deal with possible negative result of '%'
+	int thisIdx = find(begin(order), end(order), this) - begin(order);
+	int turnedIdx = (thisIdx + quartersRight) % 4;
+	if (turnedIdx < 0) turnedIdx += 4;  // deal with possible negative result of '%'
 
-	return order[turn_idx];
+	return order[turnedIdx];
 }
 
 
