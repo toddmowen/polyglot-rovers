@@ -10,13 +10,16 @@ class _Bearing;
 class Bearing
 {
 public:
+	Bearing(const _Bearing* _bearing);
 	bool operator==(const Bearing& bearing) const;
 
 private:
-	_Bearing* _bearing;
+	const _Bearing* _bearing;
 };
 
-extern Bearing N;
+
+// Bearing constants
+extern const Bearing N;
 
 
 class Rover

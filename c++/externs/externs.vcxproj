@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rovers.cpp" />
+    <ClCompile Include="runner.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E80838EF-8B66-4DB4-A345-58A1A56A8943}</ProjectGuid>
