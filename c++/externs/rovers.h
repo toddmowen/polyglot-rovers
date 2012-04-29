@@ -10,7 +10,7 @@ class Rover;
 typedef void (*command_t)(Rover&);
 
 // Bearings
-extern bearing_t N, E, S, W;
+extern const bearing_t N, E, S, W;
 
 // Rover commands
 void M(Rover&);

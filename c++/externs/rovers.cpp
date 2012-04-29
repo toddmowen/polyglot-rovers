@@ -7,10 +7,10 @@ namespace rovers
 {
 
 // bearings
-const Bearing Bearing::_N('N',  0,  1);  bearing_t N = &Bearing::_N;
-const Bearing Bearing::_E('E',  1,  0);  bearing_t E = &Bearing::_E;
-const Bearing Bearing::_S('S',  0, -1);  bearing_t S = &Bearing::_S;
-const Bearing Bearing::_W('W', -1,  0);  bearing_t W = &Bearing::_W;
+const Bearing Bearing::_N('N',  0,  1);  const bearing_t N = &Bearing::_N;
+const Bearing Bearing::_E('E',  1,  0);  const bearing_t E = &Bearing::_E;
+const Bearing Bearing::_S('S',  0, -1);  const bearing_t S = &Bearing::_S;
+const Bearing Bearing::_W('W', -1,  0);  const bearing_t W = &Bearing::_W;
 
 
 // commands
