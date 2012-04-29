@@ -5,30 +5,39 @@ namespace rovers
 {
 
 
-class _Bearing;
-
+/*
+ * Type-safe enum pattern.
+ * Apart from the four predefined directions, other Bearing instances cannot be
+ * created. To test for equality, please compare by reference.
+ */
 class Bearing
 {
 public:
-	Bearing(const _Bearing* _bearing);
-	bool operator==(const Bearing& bearing) const;
+	Bearing(char symbol, int dx, int dy);
+
+	const char symbol;
+	const int dx, dy;
+
+	static const Bearing N;
 
 private:
-	const _Bearing* _bearing;
+	Bearing(const Bearing&);
+	Bearing& operator=(const Bearing&);
 };
 
 
-// Bearing constants
-extern const Bearing N;
+// For convenience, the bearing constants are copied to the "rovers" namespace,
+// so there is no need to write Bearing::N, etc.
+extern Bearing const& N;
 
 
 class Rover
 {
 public:
 	int x, y;
-	Bearing bearing;
+	Bearing const& bearing;
 
-	Rover(int x, int y, Bearing bearing);
+	Rover(int x, int y, Bearing const& bearing);
 };
 
 

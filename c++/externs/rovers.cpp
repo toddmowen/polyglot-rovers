@@ -4,26 +4,18 @@ namespace rovers
 {
 
 
-class _Bearing {};
+const Bearing Bearing::N('N', 0, 1);
+Bearing const& N = Bearing::N;
 
-const _Bearing _N; const Bearing N(&_N);
 
-
-Rover::Rover(int x, int y, Bearing bearing) : x(x), y(y), bearing(bearing)
+Bearing::Bearing(char symbol, int dx, int dy) : symbol(symbol), dx(dx), dy(dy)
 {
 }
 
 
-Bearing::Bearing(const _Bearing* _bearing) : _bearing(_bearing)
+Rover::Rover(int x, int y, Bearing const& bearing) : x(x), y(y), bearing(bearing)
 {
 }
 
-
-bool Bearing::operator==(const Bearing& bearing) const
-{
-	// Because only the four pre-defined instances of _Bearing should ever exist,
-	// it is adequate to just compare them by reference.
-	return this->_bearing == bearing._bearing;
-}
 
 }

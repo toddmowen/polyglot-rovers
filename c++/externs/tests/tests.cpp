@@ -19,7 +19,7 @@ void test_construct()
 
 	assert(1 == rover.x);
 	assert(2 == rover.y);
-	assert(N == rover.bearing);
+	assert(&N == &rover.bearing);
 }	
 
 
