@@ -4,6 +4,7 @@
  */
 
 #include <iostream>
+#include <iterator>
 #include <assert.h>
 
 #include "../rovers.h"
@@ -50,12 +51,23 @@ void test_L()
 }
 
 
+void test_exec()
+{
+	Rover rover(1, 2, N);
+	command_t cmds[] = {L, M, L, M, L, M, L, M, M};
+	rover.exec(begin(cmds), end(cmds));
+
+	assert(Rover(1, 3, N) == rover);
+}
+
+
 int main()
 {
 	test_construct();
 	test_M();
 	test_R();
 	test_L();
+	test_exec();
 
 	cout << "All tests passed!" << endl;
 	return 0;

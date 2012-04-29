@@ -1,6 +1,9 @@
 #ifndef ROVERS_H
 #define ROVERS_H
 
+#include <algorithm>
+
+
 namespace rovers
 {
 
@@ -26,6 +29,13 @@ public:
 
 	Rover(int x, int y, bearing_t bearing);
 	bool operator==(Rover const& rover) const;
+
+	// Overloaded exec() function takes either a single command_t, or an iterator range.
+	void exec(command_t);
+	template<class InputIterator> void exec(InputIterator first, InputIterator last)
+	{
+		std::for_each(first, last, [&](command_t cmd) { this->exec(cmd); } );
+	}
 };
 
 

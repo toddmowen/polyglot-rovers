@@ -50,4 +50,10 @@ bool Rover::operator==(Rover const& rover) const
 }
 
 
+void Rover::exec(command_t cmd)
+{
+	cmd(*this);
+}
+
+
 }
