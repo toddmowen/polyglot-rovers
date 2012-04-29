@@ -5,21 +5,27 @@ namespace rovers
 {
 
 
-class Direction
+class _Bearing;
+
+class Bearing
 {
+public:
+	bool operator==(const Bearing& bearing) const;
+
+private:
+	_Bearing* _bearing;
 };
 
-
-auto N = Direction();
+extern Bearing N;
 
 
 class Rover
 {
 public:
 	int x, y;
-	Direction direction;
+	Bearing bearing;
 
-	Rover(int x, int y, Direction direction);
+	Rover(int x, int y, Bearing bearing);
 };
 
 
