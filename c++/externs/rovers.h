@@ -38,7 +38,13 @@ public:
 	Bearing const& bearing;
 
 	Rover(int x, int y, Bearing const& bearing);
+	bool operator==(Rover const& rover) const;
 };
+
+
+// Rover commands
+typedef void (*command_t)(Rover&);
+void M(Rover&);
 
 
 }

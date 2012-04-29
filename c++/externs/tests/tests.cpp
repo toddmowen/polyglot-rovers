@@ -20,12 +20,22 @@ void test_construct()
 	assert(1 == rover.x);
 	assert(2 == rover.y);
 	assert(&N == &rover.bearing);
-}	
+}
+
+
+void test_M()
+{
+	Rover rover(1, 2, N);
+	M(rover);
+
+	assert(Rover(1, 3, N) == rover);
+}
 
 
 int main()
 {
 	test_construct();
+	test_M();
 
 	cout << "All tests passed!" << endl;
 	return 0;
