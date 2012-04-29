@@ -4,6 +4,19 @@
 namespace rovers
 {
 
+class Bearing;
+typedef Bearing const* bearing_t;
+class Rover;
+typedef void (*command_t)(Rover&);
+
+// Bearings
+extern bearing_t N, E, S, W;
+
+// Rover commands
+void M(Rover&);
+void R(Rover&);
+void L(Rover&);
+
 
 /*
  * Type-safe enum pattern.
@@ -14,7 +27,7 @@ class Bearing
 {
 public:
 	Bearing(char symbol, int dx, int dy);
-	Bearing const* turned(int quartersRight) const;
+	bearing_t turned(int quartersRight) const;
 
 	const char symbol;
 	const int dx, dy;
@@ -30,10 +43,6 @@ private:
 };
 
 
-typedef Bearing const* bearing_t;
-extern bearing_t N, E, S, W;
-
-
 class Rover
 {
 public:
@@ -43,13 +52,6 @@ public:
 	Rover(int x, int y, bearing_t bearing);
 	bool operator==(Rover const& rover) const;
 };
-
-
-// Rover commands
-typedef void (*command_t)(Rover&);
-void M(Rover&);
-void R(Rover&);
-void L(Rover&);
 
 
 }
