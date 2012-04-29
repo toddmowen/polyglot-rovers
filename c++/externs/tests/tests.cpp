@@ -41,11 +41,21 @@ void test_R()
 }
 
 
+void test_L()
+{
+	Rover rover(1, 2, N);
+	L(rover);
+
+	assert(Rover(1, 2, W) == rover);
+}
+
+
 int main()
 {
 	test_construct();
 	test_M();
 	test_R();
+	test_L();
 
 	cout << "All tests passed!" << endl;
 	return 0;

@@ -53,6 +53,7 @@ public:
 typedef void (*command_t)(Rover&);
 void M(Rover&);
 void R(Rover&);
+void L(Rover&);
 
 
 }
