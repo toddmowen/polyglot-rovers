@@ -1,4 +1,7 @@
+#include <iostream>
+
 int main()
 {
-	return 0;
+	std::cerr << "Mainline not yet implemented" << std::endl;
+	return 1;
 }
