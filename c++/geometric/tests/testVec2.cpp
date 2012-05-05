@@ -24,8 +24,28 @@ void testIncrement()
 }
 
 
+void testRotateRight()
+{
+	rovers::Vec2 vec(4,7);
+	vec.rotateRight();
+
+	assert(rovers::Vec2(7,-4) == vec);
+}
+
+
+void testRotateLeft()
+{
+	rovers::Vec2 vec(4,7);
+	vec.rotateLeft();
+
+	assert(rovers::Vec2(-7,4) == vec);
+}
+
+
 void testVec2()
 {
 	testConstructVec2();
 	testIncrement();
+	testRotateRight();
+	testRotateLeft();
 }

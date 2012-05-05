@@ -43,6 +43,26 @@ Vec2::operator+=(const Vec2& that)
 
 
 void
+Vec2::rotateRight()
+{
+	setXY(
+		y_,
+		-x_
+	);
+}
+
+
+void
+Vec2::rotateLeft()
+{
+	setXY(
+		-y_,
+		x_
+	);
+}
+
+
+void
 Vec2::setXY(const int x, const int y)
 {
 	x_ = x;
