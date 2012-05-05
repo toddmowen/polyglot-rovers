@@ -26,12 +26,12 @@ private:
 class Rover
 {
 public:
-	Rover(int x, int y, Vec2 const& velocity);
+	Rover(int x, int y, Vec2 const& heading);
 	int x() const;
 	int y() const;
-	Vec2 velocity() const;
+	Vec2 heading() const;
 
-	// bearing constants
+	// heading constants
 	static const Vec2 EAST;
 	static const Vec2 NORTH;
 	static const Vec2 WEST;
@@ -48,7 +48,7 @@ public:
 
 private:
 	Vec2 position_;
-	Vec2 velocity_;
+	Vec2 heading_;
 };
 
 

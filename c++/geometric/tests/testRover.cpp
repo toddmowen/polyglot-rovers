@@ -12,7 +12,7 @@ void testConstructRover()
 
 	assert(10 == rover.x());
 	assert(-5 == rover.y());
-	assert(rovers::Rover::WEST == rover.velocity());
+	assert(rovers::Rover::WEST == rover.heading());
 }
 
 
@@ -31,7 +31,7 @@ void testL()
 	rovers::Rover rover(10, -5, rovers::Rover::EAST);
 	rover.L();
 
-	assert(rovers::Rover::NORTH == rover.velocity());
+	assert(rovers::Rover::NORTH == rover.heading());
 }
 
 
@@ -40,7 +40,7 @@ void testR()
 	rovers::Rover rover(10, -5, rovers::Rover::EAST);
 	rover.R();
 
-	assert(rovers::Rover::SOUTH == rover.velocity());
+	assert(rovers::Rover::SOUTH == rover.heading());
 }
 
 
@@ -68,7 +68,7 @@ void testExec()
 
 	assert(1 == rover.x());
 	assert(3 == rover.y());
-	assert(rovers::Rover::NORTH == rover.velocity());
+	assert(rovers::Rover::NORTH == rover.heading());
 }
 
 

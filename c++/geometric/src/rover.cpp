@@ -5,15 +5,15 @@ namespace rovers
 {
 
 
-// bearing constants
+// heading constants
 const Vec2 Rover::EAST  ( 1, 0);
 const Vec2 Rover::NORTH ( 0, 1);
 const Vec2 Rover::WEST  (-1, 0);
 const Vec2 Rover::SOUTH ( 0,-1);
 
 	
-Rover::Rover(const int x, const int y, Vec2 const& velocity)
-	: position_(Vec2(x,y)), velocity_(velocity)
+Rover::Rover(const int x, const int y, Vec2 const& heading)
+	: position_(Vec2(x,y)), heading_(heading)
 {
 }
 
@@ -33,30 +33,30 @@ Rover::y() const
 
 
 Vec2
-Rover::velocity() const
+Rover::heading() const
 {
-	return velocity_;
+	return heading_;
 }
 
 
 void
 Rover::M()
 {
-	position_ += velocity_;
+	position_ += heading_;
 }
 
 
 void
 Rover::L()
 {
-	velocity_.rotateLeft();
+	heading_.rotateLeft();
 }
 
 
 void
 Rover::R()
 {
-	velocity_.rotateRight();
+	heading_.rotateRight();
 }
 
 
