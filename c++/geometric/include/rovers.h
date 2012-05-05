@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vec2_.h>
 
 namespace rovers
@@ -32,5 +33,12 @@ private:
 	Vec2 heading_;
 };
 
+
+// stream-based IO
+//
+// Note: behaviour for negative coordinates is undefined (since according to the
+// problem spec, the south-west corner of the plateau is always 0,0).
+
+std::ostream& operator<<(std::ostream& out, Rover const&);
 
 }  // namespace rovers

@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rover.cpp" />
+    <ClCompile Include="roverIO.cpp" />
     <ClCompile Include="vec2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
