@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <utility>
+#include <string>
 #include <rovers.h>
 
 namespace rovers
@@ -31,7 +32,7 @@ char headingToChar(Vec2 const& heading)
 }
 
 
-Vec2 charToHeading(char c)
+Vec2 charToHeading(const char c)
 {
 	auto iter = std::find_if(
 		begin(CompassHeadings),
@@ -64,6 +65,46 @@ std::istream& operator>>(std::istream& is, Rover& rover)
 	is >> x >> y >> headingChar;
 	Vec2 heading = charToHeading(headingChar);
 	rover = Rover(x, y, heading);
+
+	return is;
+}
+
+
+const std::pair<char,Rover::Command> Commands[] = {
+	std::pair<char,Rover::Command>('L', &Rover::L),
+	std::pair<char,Rover::Command>('R', &Rover::R),
+	std::pair<char,Rover::Command>('M', &Rover::M)
+};
+
+
+Rover::Command charToCommand(const char c)
+{
+	auto iter = std::find_if(
+		begin(Commands),
+		end(Commands),
+		[&] (std::pair<char,Rover::Command> const& assoc) { return assoc.first == c; }
+	);
+
+	if (end(Commands) == iter)
+	{
+		throw std::exception("Not a valid command.");
+	}
+
+	return iter->second;
+}
+
+
+std::istream& operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
+{
+	std::string chars;
+	is >> chars;
+
+	cmds.clear();
+	std::for_each(
+		begin(chars),
+		end(chars),
+		[&] (char c) { cmds.push_back(charToCommand(c)); }
+	);
 
 	return is;
 }

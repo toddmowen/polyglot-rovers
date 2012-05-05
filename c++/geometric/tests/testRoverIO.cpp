@@ -8,7 +8,7 @@
 using rovers::Rover;
 
 
-void testRoverWrite()
+void testWriteRover()
 {
 	std::stringstream buf;
 	Rover rover(4, 1, Rover::EAST);
@@ -18,7 +18,7 @@ void testRoverWrite()
 }
 
 
-void testRoverRead()
+void testReadRover()
 {
 	std::stringstream buf("3 2 S");
 	Rover rover(0, 0, Rover::NORTH);
@@ -28,8 +28,27 @@ void testRoverRead()
 }
 
 
+void testReadCommands()
+{
+	std::stringstream buf("LLMRMM");
+	std::vector<Rover::Command> cmds;
+	cmds.push_back(&Rover::R);  // this will be overwritten
+	buf >> cmds;
+
+	std::vector<Rover::Command> expected;
+	expected.push_back(&Rover::L);
+	expected.push_back(&Rover::L);
+	expected.push_back(&Rover::M);
+	expected.push_back(&Rover::R);
+	expected.push_back(&Rover::M);
+	expected.push_back(&Rover::M);
+	assert(expected == cmds);
+}
+
+
 void testRoverIO()
 {
-	testRoverWrite();
-	testRoverRead();
+	testWriteRover();
+	testReadRover();
+	testReadCommands();
 }
