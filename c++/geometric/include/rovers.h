@@ -15,6 +15,7 @@ public:
 	int x() const;
 	int y() const;
 	Vec2 heading() const;
+	bool operator==(Rover const&) const;
 
 	// heading constants
 	static const Vec2 EAST;
@@ -42,7 +43,8 @@ private:
 // Note: behaviour for negative coordinates is undefined (since according to the
 // problem spec, the south-west corner of the plateau is always 0,0).
 
-std::ostream& operator<<(std::ostream& out, Rover const&);
+std::ostream& operator<<(std::ostream&, Rover const&);
+std::istream& operator>>(std::istream&, Rover&);
 
 
 }  // namespace rovers

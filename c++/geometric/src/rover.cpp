@@ -39,6 +39,13 @@ Rover::heading() const
 }
 
 
+bool
+Rover::operator==(Rover const& that) const
+{
+	return (position_ == that.position_) && (heading_ == that.heading_);
+}
+
+
 void
 Rover::M()
 {
