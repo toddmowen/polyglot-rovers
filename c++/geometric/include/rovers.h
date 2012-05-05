@@ -1,3 +1,6 @@
+#ifndef GEOMETRIC_ROVERS_H_
+#define GEOMETRIC_ROVERS_H_
+
 #include <iostream>
 #include <vec2_.h>
 
@@ -41,4 +44,7 @@ private:
 
 std::ostream& operator<<(std::ostream& out, Rover const&);
 
+
 }  // namespace rovers
+
+#endif  // GEOMETRIC_ROVERS_H_
