@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\rovers.h" />
+    <ClInclude Include="..\include\vec2_.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="rover.cpp" />
