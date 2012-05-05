@@ -53,4 +53,11 @@ Rover::R()
 }
 
 
+void
+Rover::exec(const Rover::Command cmd)
+{
+	(this->*cmd)();
+}
+
+
 } // namespace rovers

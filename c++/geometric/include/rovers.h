@@ -1,3 +1,5 @@
+#include <vector>
+
 namespace rovers
 {
 
@@ -33,6 +35,10 @@ public:
 	void M();
 	void L();
 	void R();
+
+	// convenience method for using pointers to rover commands
+	typedef void (Rover::*Command)(void);
+	void exec(Command);
 
 private:
 	Vec2 position_;
