@@ -14,7 +14,8 @@
     <ClInclude Include="..\include\rovers.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="rovers.cpp" />
+    <ClCompile Include="rover.cpp" />
+    <ClCompile Include="vec2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{004FC692-77E8-4931-89EA-19A83A692E6D}</ProjectGuid>

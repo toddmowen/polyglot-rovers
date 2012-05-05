@@ -75,6 +75,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="testRover.cpp" />
     <ClCompile Include="tests.cpp" />
     <ClCompile Include="testVec2.cpp" />
   </ItemGroup>
