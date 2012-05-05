@@ -32,4 +32,22 @@ Vec2::operator==(const Vec2& that) const
 }
 
 
+void
+Vec2::operator+=(const Vec2& that)
+{
+	setXY(
+		x_ + that.x_,
+		y_ + that.y_
+	);
+}
+
+
+void
+Vec2::setXY(const int x, const int y)
+{
+	x_ = x;
+	y_ = y;
+}
+
+
 } // namespace rovers

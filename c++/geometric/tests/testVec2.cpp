@@ -14,7 +14,18 @@ void testConstructVec2()
 }
 
 
+void testIncrement()
+{
+	rovers::Vec2 vec(4,7);
+	vec += rovers::Vec2(-5, 6);
+
+	assert(-1 == vec.x());
+	assert(13 == vec.y());
+}
+
+
 void testVec2()
 {
 	testConstructVec2();
+	testIncrement();
 }

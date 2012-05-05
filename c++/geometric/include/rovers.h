@@ -10,8 +10,11 @@ public:
 	int y() const;
 
 	bool operator==(const Vec2&) const;
+	void operator+=(const Vec2&);
 
 private:
+	void setXY(int x, int y);
+
 	int x_, y_;
 };
 
