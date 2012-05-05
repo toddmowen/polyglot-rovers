@@ -46,9 +46,26 @@ void testReadCommands()
 }
 
 
+void testInvalidCommand()
+{
+	try
+	{
+		std::stringstream buf("LMRZ");
+		std::vector<Rover::Command> cmds;
+		buf >> cmds;
+		assert(false);  // previous statement should throw exception
+	}
+	catch (std::exception e)
+	{
+		assert(std::string("Not a valid command: Z") == e.what());
+	}
+}
+
+
 void testRoverIO()
 {
 	testWriteRover();
 	testReadRover();
 	testReadCommands();
+	testInvalidCommand();
 }

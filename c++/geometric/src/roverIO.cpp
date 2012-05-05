@@ -1,17 +1,20 @@
 #include <algorithm>
 #include <utility>
 #include <string>
+#include <sstream>
 #include <rovers.h>
 
 namespace rovers
 {
 
 
-const std::pair<Vec2,char> CompassHeadings[] = {
-	std::pair<Vec2,char>(Rover::EAST,  'E'),
-	std::pair<Vec2,char>(Rover::NORTH, 'N'),
-	std::pair<Vec2,char>(Rover::WEST,  'W'),
-	std::pair<Vec2,char>(Rover::SOUTH, 'S')
+// Store translation table as an association list (rather than a map)
+// so that we can easily implement lookups in both directions.
+const std::pair<char,Vec2> CompassHeadings[] = {
+	std::make_pair('E', Rover::EAST),
+	std::make_pair('N', Rover::NORTH),
+	std::make_pair('W', Rover::WEST),
+	std::make_pair('S', Rover::SOUTH)
 };
 
 
@@ -20,7 +23,7 @@ char headingToChar(Vec2 const& heading)
 	auto iter = std::find_if(
 		begin(CompassHeadings),
 		end(CompassHeadings),
-		[&] (std::pair<Vec2,char> const& trans) { return trans.first == heading; }
+		[&] (std::pair<char,Vec2> const& assoc) { return assoc.second == heading; }
 	);
 
 	if (end(CompassHeadings) == iter)
@@ -28,7 +31,7 @@ char headingToChar(Vec2 const& heading)
 		throw std::exception("Could not translate Vec2 to compass heading.");
 	}
 
-	return iter->second;
+	return iter->first;
 }
 
 
@@ -37,15 +40,17 @@ Vec2 charToHeading(const char c)
 	auto iter = std::find_if(
 		begin(CompassHeadings),
 		end(CompassHeadings),
-		[&] (std::pair<Vec2,char> const& trans) { return trans.second == c; }
+		[&] (std::pair<char,Vec2> const& trans) { return trans.first == c; }
 	);
 
 	if (end(CompassHeadings) == iter)
 	{
-		throw std::exception("Not a valid compass heading.");
+		std::stringstream msg;
+		msg << "Not a valid compass heading: " << c;
+		throw std::exception(msg.str().c_str());
 	}
 
-	return iter->first;
+	return iter->second;
 }
 
 
@@ -70,10 +75,12 @@ std::istream& operator>>(std::istream& is, Rover& rover)
 }
 
 
+// Store translation table as an association list (rather than a map)
+// for consistency with CompassHeadings table.
 const std::pair<char,Rover::Command> Commands[] = {
-	std::pair<char,Rover::Command>('L', &Rover::L),
-	std::pair<char,Rover::Command>('R', &Rover::R),
-	std::pair<char,Rover::Command>('M', &Rover::M)
+	std::make_pair('L', &Rover::L),
+	std::make_pair('R', &Rover::R),
+	std::make_pair('M', &Rover::M)
 };
 
 
@@ -87,7 +94,9 @@ Rover::Command charToCommand(const char c)
 
 	if (end(Commands) == iter)
 	{
-		throw std::exception("Not a valid command.");
+		std::stringstream msg;
+		msg << "Not a valid command: " << c;
+		throw std::exception(msg.str().c_str());
 	}
 
 	return iter->second;
