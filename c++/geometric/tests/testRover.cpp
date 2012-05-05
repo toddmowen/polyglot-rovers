@@ -8,47 +8,46 @@
 
 void testConstructRover()
 {
-	rovers::Vec2 velocity(4,3);
-	rovers::Rover rover(10, -5, velocity);
+	rovers::Rover rover(10, -5, rovers::Rover::WEST);
 
 	assert(10 == rover.x());
 	assert(-5 == rover.y());
-	assert(velocity == rover.velocity());
+	assert(rovers::Rover::WEST == rover.velocity());
 }
 
 
 void testM()
 {
-	rovers::Rover rover(10, -5, rovers::Vec2(1,2));
+	rovers::Rover rover(10, -5, rovers::Rover::SOUTH);
 	rover.M();
 
-	assert(10+1 == rover.x());
-	assert(-5+2 == rover.y());
+	assert(10 == rover.x());
+	assert(-6 == rover.y());
 }
 
 
 void testL()
 {
-	rovers::Rover rover(10, -5, rovers::Vec2(1,0));
+	rovers::Rover rover(10, -5, rovers::Rover::EAST);
 	rover.L();
 
-	assert(rovers::Vec2(0,1) == rover.velocity());
+	assert(rovers::Rover::NORTH == rover.velocity());
 }
 
 
 void testR()
 {
-	rovers::Rover rover(10, -5, rovers::Vec2(1,0));
+	rovers::Rover rover(10, -5, rovers::Rover::EAST);
 	rover.R();
 
-	assert(rovers::Vec2(0,-1) == rover.velocity());
+	assert(rovers::Rover::SOUTH == rover.velocity());
 }
 
 
 void testExec()
 {
 	// sample input from the project description:
-	rovers::Rover rover(1, 2, rovers::Vec2(0,1));
+	rovers::Rover rover(1, 2, rovers::Rover::NORTH);
 	rovers::Rover::Command cmds[] = {
 		&rovers::Rover::L,
 		&rovers::Rover::M,
@@ -69,7 +68,7 @@ void testExec()
 
 	assert(1 == rover.x());
 	assert(3 == rover.y());
-	assert(rovers::Vec2(0,1) == rover.velocity());
+	assert(rovers::Rover::NORTH == rover.velocity());
 }
 
 

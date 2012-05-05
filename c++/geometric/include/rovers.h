@@ -31,6 +31,12 @@ public:
 	int y() const;
 	Vec2 velocity() const;
 
+	// bearing constants
+	static const Vec2 EAST;
+	static const Vec2 NORTH;
+	static const Vec2 WEST;
+	static const Vec2 SOUTH;
+
 	// rover commands
 	void M();
 	void L();
