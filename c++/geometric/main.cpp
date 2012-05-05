@@ -19,7 +19,7 @@ int processStream(std::istream& in, std::ostream& out)
 
 	while (! in.eof())
 	{
-		Rover rover(0, 0, Rover::NORTH());
+		Rover rover;
 		std::vector<Rover::Command> cmds;
 
 		in >> rover >> cmds;

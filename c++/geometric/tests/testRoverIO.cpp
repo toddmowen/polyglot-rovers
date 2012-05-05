@@ -21,7 +21,7 @@ void testWriteRover()
 void testReadRover()
 {
 	std::stringstream buf("3 2 S");
-	Rover rover(0, 0, Rover::NORTH());
+	Rover rover;
 	buf >> rover;
 
 	assert(Rover(3, 2, Rover::SOUTH()) == rover);

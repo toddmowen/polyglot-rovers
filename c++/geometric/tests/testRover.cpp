@@ -18,6 +18,19 @@ void testConstructRover()
 }
 
 
+void testDefaultConstructRover()
+{
+	Rover rover;
+
+	// Default constructor is provided for convenience, but it leaves the rover
+	// in a meaningless state, in particular it has no legal heading.
+	assert(Rover::EAST() != rover.heading());
+	assert(Rover::NORTH() != rover.heading());
+	assert(Rover::WEST() != rover.heading());
+	assert(Rover::SOUTH() != rover.heading());
+}
+
+
 void testM()
 {
 	Rover rover(10, -5, Rover::SOUTH());
@@ -77,6 +90,7 @@ void testExec()
 void testRover()
 {
 	testConstructRover();
+	testDefaultConstructRover();
 	testM();
 	testL();
 	testR();

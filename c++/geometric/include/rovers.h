@@ -13,6 +13,7 @@ class Rover
 {
 public:
 	Rover(int x, int y, Vec2 const& heading);
+	Rover();
 	int x() const;
 	int y() const;
 	Vec2 heading() const;

@@ -32,6 +32,13 @@ Vec2::operator==(const Vec2& that) const
 }
 
 
+bool
+Vec2::operator!=(const Vec2& that) const
+{
+	return !(*this == that);
+}
+
+
 void
 Vec2::operator+=(const Vec2& that)
 {

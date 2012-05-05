@@ -18,6 +18,12 @@ Rover::Rover(const int x, const int y, Vec2 const& heading)
 }
 
 
+Rover::Rover()
+	: position_(Vec2(0,0)), heading_(Vec2(0,0))
+{
+}
+
+
 int
 Rover::x() const
 {
