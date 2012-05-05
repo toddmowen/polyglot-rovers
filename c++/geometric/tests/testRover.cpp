@@ -5,20 +5,22 @@
 #include <assert.h>
 #include <rovers.h>
 
+using rovers::Rover;
+
 
 void testConstructRover()
 {
-	rovers::Rover rover(10, -5, rovers::Rover::WEST);
+	Rover rover(10, -5, Rover::WEST);
 
 	assert(10 == rover.x());
 	assert(-5 == rover.y());
-	assert(rovers::Rover::WEST == rover.heading());
+	assert(Rover::WEST == rover.heading());
 }
 
 
 void testM()
 {
-	rovers::Rover rover(10, -5, rovers::Rover::SOUTH);
+	Rover rover(10, -5, Rover::SOUTH);
 	rover.M();
 
 	assert(10 == rover.x());
@@ -28,47 +30,47 @@ void testM()
 
 void testL()
 {
-	rovers::Rover rover(10, -5, rovers::Rover::EAST);
+	Rover rover(10, -5, Rover::EAST);
 	rover.L();
 
-	assert(rovers::Rover::NORTH == rover.heading());
+	assert(Rover::NORTH == rover.heading());
 }
 
 
 void testR()
 {
-	rovers::Rover rover(10, -5, rovers::Rover::EAST);
+	Rover rover(10, -5, Rover::EAST);
 	rover.R();
 
-	assert(rovers::Rover::SOUTH == rover.heading());
+	assert(Rover::SOUTH == rover.heading());
 }
 
 
 void testExec()
 {
 	// sample input from the project description:
-	rovers::Rover rover(1, 2, rovers::Rover::NORTH);
-	rovers::Rover::Command cmds[] = {
-		&rovers::Rover::L,
-		&rovers::Rover::M,
-		&rovers::Rover::L,
-		&rovers::Rover::M,
-		&rovers::Rover::L,
-		&rovers::Rover::M,
-		&rovers::Rover::L,
-		&rovers::Rover::M,
-		&rovers::Rover::M
+	Rover rover(1, 2, Rover::NORTH);
+	Rover::Command cmds[] = {
+		&Rover::L,
+		&Rover::M,
+		&Rover::L,
+		&Rover::M,
+		&Rover::L,
+		&Rover::M,
+		&Rover::L,
+		&Rover::M,
+		&Rover::M
 	};
 
 	std::for_each(
 		std::begin(cmds),
 		std::end(cmds),
-		[&] (rovers::Rover::Command cmd) { rover.exec(cmd); } 
+		[&] (Rover::Command cmd) { rover.exec(cmd); } 
 	);
 
 	assert(1 == rover.x());
 	assert(3 == rover.y());
-	assert(rovers::Rover::NORTH == rover.heading());
+	assert(Rover::NORTH == rover.heading());
 }
 
 
