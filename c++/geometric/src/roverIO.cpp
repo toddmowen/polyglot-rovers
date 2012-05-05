@@ -68,8 +68,11 @@ std::istream& operator>>(std::istream& is, Rover& rover)
 	char headingChar;
 
 	is >> x >> y >> headingChar;
-	Vec2 heading = charToHeading(headingChar);
-	rover = Rover(x, y, heading);
+	if (is.good())
+	{
+		Vec2 heading = charToHeading(headingChar);
+		rover = Rover(x, y, heading);
+	}
 
 	return is;
 }
@@ -106,14 +109,17 @@ Rover::Command charToCommand(const char c)
 std::istream& operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
 {
 	std::string chars;
-	is >> chars;
 
-	cmds.clear();
-	std::for_each(
-		begin(chars),
-		end(chars),
-		[&] (char c) { cmds.push_back(charToCommand(c)); }
-	);
+	is >> chars;
+	if (is.good())
+	{
+		cmds.clear();
+		std::for_each(
+			begin(chars),
+			end(chars),
+			[&] (char c) { cmds.push_back(charToCommand(c)); }
+		);
+	}
 
 	return is;
 }

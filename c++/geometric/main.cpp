@@ -12,8 +12,10 @@ void skipLine(std::istream& is)
 }
 
 
-int processStream(std::istream& in, std::ostream& out)
+void processStream(std::istream& in, std::ostream& out)
 {
+	in.exceptions(std::ios::failbit | std::ios::badbit);
+
 	// Ignore plateau bounds (not used in the basic solution to the problem)
 	skipLine(in);
 
@@ -32,8 +34,6 @@ int processStream(std::istream& in, std::ostream& out)
 
 		out << rover << std::endl;
 	}
-
-	return 0;
 }
 
 
