@@ -6,10 +6,10 @@ namespace rovers
 
 
 // heading constants
-const Vec2 Rover::EAST  ( 1, 0);
-const Vec2 Rover::NORTH ( 0, 1);
-const Vec2 Rover::WEST  (-1, 0);
-const Vec2 Rover::SOUTH ( 0,-1);
+const Vec2 Rover::EAST()  { return Vec2( 1, 0); }
+const Vec2 Rover::NORTH() { return Vec2( 0, 1); }
+const Vec2 Rover::WEST()  { return Vec2(-1, 0); }
+const Vec2 Rover::SOUTH() { return Vec2( 0,-1); }
 
 	
 Rover::Rover(const int x, const int y, Vec2 const& heading)

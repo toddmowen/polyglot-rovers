@@ -11,10 +11,10 @@ namespace rovers
 // Store translation table as an association list (rather than a map)
 // so that we can easily implement lookups in both directions.
 const std::pair<char,Vec2> CompassHeadings[] = {
-	std::make_pair('E', Rover::EAST),
-	std::make_pair('N', Rover::NORTH),
-	std::make_pair('W', Rover::WEST),
-	std::make_pair('S', Rover::SOUTH)
+	std::make_pair('E', Rover::EAST()),
+	std::make_pair('N', Rover::NORTH()),
+	std::make_pair('W', Rover::WEST()),
+	std::make_pair('S', Rover::SOUTH())
 };
 
 

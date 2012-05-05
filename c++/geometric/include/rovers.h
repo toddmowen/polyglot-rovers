@@ -18,18 +18,18 @@ public:
 	Vec2 heading() const;
 	bool operator==(Rover const&) const;
 
-	// heading constants
-	static const Vec2 EAST;
-	static const Vec2 NORTH;
-	static const Vec2 WEST;
-	static const Vec2 SOUTH;
+	// heading constants (implemented as static calls to avoid initialization issues)
+	static const Vec2 EAST();
+	static const Vec2 NORTH();
+	static const Vec2 WEST();
+	static const Vec2 SOUTH();
 
-	// rover commands
+	// rover commands (to pass to exec(), take address of method with "&")
 	void M();
 	void L();
 	void R();
 
-	// convenience method for using pointers to rover commands
+	// convenience method for using pointers to the above rover commands
 	typedef void (Rover::*Command)(void);
 	void exec(Command);
 
@@ -41,8 +41,11 @@ private:
 
 // stream-based IO
 //
-// Note: behaviour for negative coordinates is undefined (since according to the
-// problem spec, the south-west corner of the plateau is always 0,0).
+// Note 1: These do not distinguish between spaces and newlines, therefore they
+// accept a superset of the format described in the problem spec.
+//
+// Note 2: Behaviour for negative coordinates is undefined (since according to
+// the problem spec, the south-west corner of the plateau is always 0,0).
 
 std::ostream& operator<<(std::ostream&, Rover const&);
 std::istream& operator>>(std::istream&, Rover&);
