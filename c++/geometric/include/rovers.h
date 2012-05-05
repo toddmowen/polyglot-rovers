@@ -29,6 +29,11 @@ public:
 	int y() const;
 	Vec2 velocity() const;
 
+	// rover commands
+	void M();
+	void L();
+	void R();
+
 private:
 	Vec2 position_;
 	Vec2 velocity_;

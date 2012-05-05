@@ -32,4 +32,25 @@ Rover::velocity() const
 }
 
 
+void
+Rover::M()
+{
+	position_ += velocity_;
+}
+
+
+void
+Rover::L()
+{
+	velocity_.rotateLeft();
+}
+
+
+void
+Rover::R()
+{
+	velocity_.rotateRight();
+}
+
+
 } // namespace rovers

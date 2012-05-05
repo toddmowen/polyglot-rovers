@@ -16,7 +16,38 @@ void testConstructRover()
 }
 
 
+void testM()
+{
+	rovers::Rover rover(10, -5, rovers::Vec2(1,2));
+	rover.M();
+
+	assert(10+1 == rover.x());
+	assert(-5+2 == rover.y());
+}
+
+
+void testL()
+{
+	rovers::Rover rover(10, -5, rovers::Vec2(1,0));
+	rover.L();
+
+	assert(rovers::Vec2(0,1) == rover.velocity());
+}
+
+
+void testR()
+{
+	rovers::Rover rover(10, -5, rovers::Vec2(1,0));
+	rover.R();
+
+	assert(rovers::Vec2(0,-1) == rover.velocity());
+}
+
+
 void testRover()
 {
 	testConstructRover();
+	testM();
+	testL();
+	testR();
 }
