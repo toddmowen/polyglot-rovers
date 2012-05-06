@@ -14,18 +14,13 @@ void skipLine(std::istream& is)
 
 void processStream(std::istream& in, std::ostream& out)
 {
-	in.exceptions(std::ios::failbit | std::ios::badbit);
-
 	// Ignore plateau bounds (not used in the basic solution to the problem)
 	skipLine(in);
 
-	while (! in.eof())
+	Rover rover;
+	std::vector<Rover::Command> cmds;
+	while (in >> rover >> cmds)
 	{
-		Rover rover;
-		std::vector<Rover::Command> cmds;
-
-		in >> rover >> cmds;
-		
 		std::for_each(
 			begin(cmds),
 			end(cmds),
@@ -34,6 +29,13 @@ void processStream(std::istream& in, std::ostream& out)
 
 		out << rover << std::endl;
 	}
+
+	if (!in.eof())
+	{
+		throw std::exception("Parse error");
+	}
+
+	return 0;
 }
 
 
