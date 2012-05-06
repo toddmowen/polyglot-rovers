@@ -110,9 +110,9 @@ operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
 {
 	std::string chars;
 
+	cmds.clear();
 	if (is >> chars)
 	{
-		cmds.clear();
 		std::for_each(
 			begin(chars),
 			end(chars),

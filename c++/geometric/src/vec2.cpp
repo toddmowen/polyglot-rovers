@@ -42,30 +42,21 @@ Vec2::operator!=(const Vec2& that) const
 void
 Vec2::operator+=(const Vec2& that)
 {
-	setXY(
-		x_ + that.x_,
-		y_ + that.y_
-	);
+	setXY(x_ + that.x_, y_ + that.y_);
 }
 
 
 void
 Vec2::rotateRight()
 {
-	setXY(
-		y_,
-		-x_
-	);
+	setXY(y_, -x_);
 }
 
 
 void
 Vec2::rotateLeft()
 {
-	setXY(
-		-y_,
-		x_
-	);
+	setXY(-y_, x_);
 }
 
 
