@@ -40,11 +40,11 @@ main()
 	try
 	{
 		processStream(std::cin, std::cout);
-		return 0;
+		return EXIT_SUCCESS;
 	}
 	catch (std::exception e)
 	{
 		std::cerr << e.what() << std::endl;
-		return 1;
+		return EXIT_FAILURE;
 	}
 }
