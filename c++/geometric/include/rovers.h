@@ -30,9 +30,10 @@ public:
 	void L();
 	void R();
 
-	// convenience method for using pointers to the above rover commands
+	// convenience methods for using pointers to the above rover commands
 	typedef void (Rover::*Command)(void);
 	void exec(Command);
+	void exec(std::vector<Command> const&);
 
 private:
 	Vec2 position_;

@@ -69,23 +69,18 @@ testExec()
 {
 	// sample input from the project description:
 	Rover rover(1, 2, Rover::NORTH());
-	Rover::Command cmds[] = {
-		&Rover::L,
-		&Rover::M,
-		&Rover::L,
-		&Rover::M,
-		&Rover::L,
-		&Rover::M,
-		&Rover::L,
-		&Rover::M,
-		&Rover::M
-	};
+	std::vector<Rover::Command> cmds;
+	cmds.push_back(&Rover::L);
+	cmds.push_back(&Rover::M);
+	cmds.push_back(&Rover::L);
+	cmds.push_back(&Rover::M);
+	cmds.push_back(&Rover::L);
+	cmds.push_back(&Rover::M);
+	cmds.push_back(&Rover::L);
+	cmds.push_back(&Rover::M);
+	cmds.push_back(&Rover::M);
 
-	std::for_each(
-		std::begin(cmds),
-		std::end(cmds),
-		[&] (Rover::Command cmd) { rover.exec(cmd); } 
-	);
+	rover.exec(cmds);
 
 	assert (1 == rover.x());
 	assert (3 == rover.y());

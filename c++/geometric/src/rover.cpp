@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <rovers.h>
 
 
@@ -77,6 +78,17 @@ void
 Rover::exec(const Rover::Command cmd)
 {
 	(this->*cmd)();
+}
+
+
+void
+Rover::exec(std::vector<Rover::Command> const& cmds)
+{
+	std::for_each(
+		begin(cmds),
+		end(cmds),
+		[&] (Rover::Command cmd) { exec(cmd); }
+	);
 }
 
 
