@@ -8,58 +8,64 @@
 using rovers::Rover;
 
 
-void testConstructRover()
+void
+testConstructRover()
 {
 	Rover rover(10, -5, Rover::WEST());
 
-	assert(10 == rover.x());
-	assert(-5 == rover.y());
-	assert(Rover::WEST() == rover.heading());
+	assert (10 == rover.x());
+	assert (-5 == rover.y());
+	assert (Rover::WEST() == rover.heading());
 }
 
 
-void testDefaultConstructRover()
+void
+testDefaultConstructRover()
 {
 	Rover rover;
 
 	// Default constructor is provided for convenience, but it leaves the rover
 	// in a meaningless state, in particular it has no legal heading.
-	assert(Rover::EAST() != rover.heading());
-	assert(Rover::NORTH() != rover.heading());
-	assert(Rover::WEST() != rover.heading());
-	assert(Rover::SOUTH() != rover.heading());
+	assert (Rover::EAST() != rover.heading());
+	assert (Rover::NORTH() != rover.heading());
+	assert (Rover::WEST() != rover.heading());
+	assert (Rover::SOUTH() != rover.heading());
 }
 
 
-void testM()
+void
+testM()
 {
 	Rover rover(10, -5, Rover::SOUTH());
 	rover.M();
 
-	assert(10 == rover.x());
-	assert(-6 == rover.y());
+	assert (10 == rover.x());
+	assert (-6 == rover.y());
 }
 
 
-void testL()
+void
+testL()
 {
 	Rover rover(10, -5, Rover::EAST());
 	rover.L();
 
-	assert(Rover::NORTH() == rover.heading());
+	assert (Rover::NORTH() == rover.heading());
 }
 
 
-void testR()
+void
+testR()
 {
 	Rover rover(10, -5, Rover::EAST());
 	rover.R();
 
-	assert(Rover::SOUTH() == rover.heading());
+	assert (Rover::SOUTH() == rover.heading());
 }
 
 
-void testExec()
+void
+testExec()
 {
 	// sample input from the project description:
 	Rover rover(1, 2, Rover::NORTH());
@@ -81,13 +87,14 @@ void testExec()
 		[&] (Rover::Command cmd) { rover.exec(cmd); } 
 	);
 
-	assert(1 == rover.x());
-	assert(3 == rover.y());
-	assert(Rover::NORTH() == rover.heading());
+	assert (1 == rover.x());
+	assert (3 == rover.y());
+	assert (Rover::NORTH() == rover.heading());
 }
 
 
-void testRover()
+void
+testRover()
 {
 	testConstructRover();
 	testDefaultConstructRover();

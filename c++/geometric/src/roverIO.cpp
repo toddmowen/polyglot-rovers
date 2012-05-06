@@ -10,7 +10,9 @@ namespace rovers
 
 // Store translation table as an association list (rather than a map)
 // so that we can easily implement lookups in both directions.
-const std::pair<char,Vec2> CompassHeadings[] = {
+const std::pair<char,Vec2>
+CompassHeadings[] =
+{
 	std::make_pair('E', Rover::EAST()),
 	std::make_pair('N', Rover::NORTH()),
 	std::make_pair('W', Rover::WEST()),
@@ -18,7 +20,8 @@ const std::pair<char,Vec2> CompassHeadings[] = {
 };
 
 
-char headingToChar(Vec2 const& heading)
+char
+headingToChar(Vec2 const& heading)
 {
 	auto iter = std::find_if(
 		begin(CompassHeadings),
@@ -35,7 +38,8 @@ char headingToChar(Vec2 const& heading)
 }
 
 
-Vec2 charToHeading(const char c)
+Vec2
+charToHeading(const char c)
 {
 	auto iter = std::find_if(
 		begin(CompassHeadings),
@@ -54,7 +58,8 @@ Vec2 charToHeading(const char c)
 }
 
 
-std::ostream& operator<<(std::ostream& out, Rover const& rover)
+std::ostream&
+operator<<(std::ostream& out, Rover const& rover)
 {
 	out << rover.x() << " " << rover.y() << " " << headingToChar(rover.heading());
 
@@ -62,7 +67,8 @@ std::ostream& operator<<(std::ostream& out, Rover const& rover)
 }
 
 
-std::istream& operator>>(std::istream& is, Rover& rover)
+std::istream&
+operator>>(std::istream& is, Rover& rover)
 {
 	int x, y;
 	char headingChar;
@@ -79,14 +85,17 @@ std::istream& operator>>(std::istream& is, Rover& rover)
 
 // Store translation table as an association list (rather than a map)
 // for consistency with CompassHeadings table.
-const std::pair<char,Rover::Command> Commands[] = {
+const std::pair<char,Rover::Command>
+Commands[] =
+{
 	std::make_pair('L', &Rover::L),
 	std::make_pair('R', &Rover::R),
 	std::make_pair('M', &Rover::M)
 };
 
 
-Rover::Command charToCommand(const char c)
+Rover::Command
+charToCommand(const char c)
 {
 	auto iter = std::find_if(
 		begin(Commands),
@@ -105,7 +114,8 @@ Rover::Command charToCommand(const char c)
 }
 
 
-std::istream& operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
+std::istream&
+operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
 {
 	std::string chars;
 

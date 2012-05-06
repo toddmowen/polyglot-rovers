@@ -6,13 +6,15 @@
 using rovers::Rover;
 
 
-void skipLine(std::istream& is)
+void
+skipLine(std::istream& is)
 {
 	is.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
 
-void execCommands(Rover& rover, std::vector<Rover::Command>& cmds)
+void
+execCommands(Rover& rover, std::vector<Rover::Command>& cmds)
 {
 	std::for_each(
 		begin(cmds),
@@ -22,7 +24,8 @@ void execCommands(Rover& rover, std::vector<Rover::Command>& cmds)
 }
 
 
-void processStream(std::istream& in, std::ostream& out)
+void
+processStream(std::istream& in, std::ostream& out)
 {
 	// Ignore plateau bounds (not used in the basic solution to the problem)
 	skipLine(in);
@@ -44,7 +47,8 @@ void processStream(std::istream& in, std::ostream& out)
 }
 
 
-int main()
+int
+main()
 {
 	try
 	{

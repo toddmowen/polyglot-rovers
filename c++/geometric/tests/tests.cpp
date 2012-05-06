@@ -5,7 +5,8 @@ void testRover();
 void testRoverIO();
 
 
-int main()
+int
+main()
 {
 	testVec2();
 	testRover();
