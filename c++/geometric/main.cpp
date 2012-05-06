@@ -42,9 +42,14 @@ main()
 		processStream(std::cin, std::cout);
 		return EXIT_SUCCESS;
 	}
-	catch (std::exception e)
+	catch (std::exception& e)
 	{
 		std::cerr << e.what() << std::endl;
+		return EXIT_FAILURE;
+	}
+	catch (...)
+	{
+		std::cerr << "Unknown exception occurred" << std::endl;
 		return EXIT_FAILURE;
 	}
 }
