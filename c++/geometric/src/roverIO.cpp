@@ -67,8 +67,7 @@ std::istream& operator>>(std::istream& is, Rover& rover)
 	int x, y;
 	char headingChar;
 
-	is >> x >> y >> headingChar;
-	if (is.good())
+	if (is >> x >> y >> headingChar)
 	{
 		Vec2 heading = charToHeading(headingChar);
 		rover = Rover(x, y, heading);
@@ -110,8 +109,7 @@ std::istream& operator>>(std::istream& is, std::vector<Rover::Command>& cmds)
 {
 	std::string chars;
 
-	is >> chars;
-	if (is.good())
+	if (is >> chars)
 	{
 		cmds.clear();
 		std::for_each(
