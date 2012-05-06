@@ -9,9 +9,9 @@ namespace rovers
 
 
 // Store translation table as an association list (rather than a map)
-// so that we can easily implement lookups in both directions.
+// so that we can use the same structure for lookups in both directions.
 const std::pair<char,Vec2>
-CompassHeadings[] =
+HEADINGS[] =
 {
 	std::make_pair('E', Rover::EAST()),
 	std::make_pair('N', Rover::NORTH()),
@@ -23,38 +23,32 @@ CompassHeadings[] =
 char
 headingToChar(Vec2 const& heading)
 {
-	auto iter = std::find_if(
-		begin(CompassHeadings),
-		end(CompassHeadings),
-		[&] (std::pair<char,Vec2> const& assoc) { return assoc.second == heading; }
-	);
-
-	if (end(CompassHeadings) == iter)
+	for (auto iter = begin(HEADINGS); iter != end(HEADINGS); iter++)
 	{
-		throw std::exception("Could not translate Vec2 to compass heading.");
+		if (iter->second == heading)
+		{
+			return iter->first;
+		}
 	}
 
-	return iter->first;
+	throw std::exception("Could not translate Vec2 to compass heading.");
 }
 
 
 Vec2
 charToHeading(const char c)
 {
-	auto iter = std::find_if(
-		begin(CompassHeadings),
-		end(CompassHeadings),
-		[&] (std::pair<char,Vec2> const& trans) { return trans.first == c; }
-	);
-
-	if (end(CompassHeadings) == iter)
+	for (auto iter = begin(HEADINGS); iter != end(HEADINGS); iter++)
 	{
-		std::stringstream msg;
-		msg << "Not a valid compass heading: " << c;
-		throw std::exception(msg.str().c_str());
+		if (iter->first == c)
+		{
+			return iter->second;
+		}
 	}
 
-	return iter->second;
+	std::stringstream msg;
+	msg << "Not a valid compass heading: " << c;
+	throw std::exception(msg.str().c_str());
 }
 
 
@@ -84,9 +78,9 @@ operator>>(std::istream& is, Rover& rover)
 
 
 // Store translation table as an association list (rather than a map)
-// for consistency with CompassHeadings table.
+// for consistency with HEADINGS table.
 const std::pair<char,Rover::Command>
-Commands[] =
+COMMANDS[] =
 {
 	std::make_pair('L', &Rover::L),
 	std::make_pair('R', &Rover::R),
@@ -97,20 +91,17 @@ Commands[] =
 Rover::Command
 charToCommand(const char c)
 {
-	auto iter = std::find_if(
-		begin(Commands),
-		end(Commands),
-		[&] (std::pair<char,Rover::Command> const& assoc) { return assoc.first == c; }
-	);
-
-	if (end(Commands) == iter)
+	for (auto iter = begin(COMMANDS); iter != end(COMMANDS); iter++)
 	{
-		std::stringstream msg;
-		msg << "Not a valid command: " << c;
-		throw std::exception(msg.str().c_str());
+		if (iter->first == c)
+		{
+			return iter->second;
+		}
 	}
 
-	return iter->second;
+	std::stringstream msg;
+	msg << "Not a valid command: " << c;
+	throw std::exception(msg.str().c_str());
 }
 
 
