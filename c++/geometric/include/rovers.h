@@ -43,11 +43,8 @@ private:
 
 // stream-based IO
 //
-// Note 1: These do not distinguish between spaces and newlines, therefore they
+// Note: These do not distinguish between spaces and newlines, therefore they
 // accept a superset of the format described in the problem spec.
-//
-// Note 2: Behaviour for negative coordinates is undefined (since according to
-// the problem spec, the south-west corner of the plateau is always 0,0).
 
 std::ostream& operator<<(std::ostream&, Rover const&);
 std::istream& operator>>(std::istream&, Rover&);
