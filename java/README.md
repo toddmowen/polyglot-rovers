@@ -8,4 +8,12 @@ This solution was an attempt to write a solution that minimizes "state". The pro
 
 An additional characteristic of this solution, which is mainly related to the fact that I originally submitted this solution for assessment purposes, is that it tries to be very "complete", with bounds checking, unit tests, a Maven build script, and so on.
 
-Note that this solution implements the "L" and "R" rover commands as geometric transformations. In the Scala solutions that I wrote later, I used a simpler design based on assigning an order to the bearings, i.e.. N -> E -> S -> W.
+Note that this solution implements the "L" and "R" rover commands as geometric transformations. In some of the solutions that I wrote later, I used a simpler design based on assigning an order to the bearings, i.e.. N -> E -> S -> W.
+
+
+Second solution: simple
+-----------------------
+
+This is a much shorter, one-file solution that aims to avoid unnecessary complexity while still being well structured.
+
+I/O has not yet been implemented for this solution.
