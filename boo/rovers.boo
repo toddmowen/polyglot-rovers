@@ -37,8 +37,8 @@ class Rover:
 	def ToString():
 		return "Rover($X, $Y, $Bearing)"
 
-	def L():
+	def R():
 		_bearing = _bearing.Right()
 
-	def R():
+	def L():
 		_bearing = _bearing.Left()
